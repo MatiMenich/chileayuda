@@ -6,201 +6,70 @@
 	<link rel="stylesheet" href="{% static "js/leaflet.css"%}"  >
 
 	<link rel="stylesheet" href="{% static "css/block.css"%}" />
-	<script src="{% static "js/leaflet.js"%}">" </script>
+	<link rel="stylesheet" href="{% static "css/default.css"%}" />
+	<link rel="stylesheet" href="{% static "css/bootstrap/css/bootstrap.min.css"%}" />
+	<script src="{% static 'js/leaflet.js'%}"></script>
 
 	<link rel="stylesheet" href="{% static "js/MarkerCluster.css"%}" />
 	<link rel="stylesheet" href="{% static "js/MarkerCluster.Default.css"%}" />
 	<script src="{% static "js/leaflet.markercluster.js" %}"></script>
 	<script src="{% static "js/jquery.min.js"%}"></script>
+	<script src="{% static "js/map.js"%}"></script>
 
 	<script type="text/javascript">
-
 		$(function(){
-
-			//centrar
-			jQuery.fn.center = function () {
-                this.css("position","absolute");
-                this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 3) +
-                                                            $(window).scrollTop()) + "px");
-                this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-                                                            $(window).scrollLeft()) + "px");
-                return this;
-            }
-
-
-            //block screen
-			function block(){
-			    $("#screen").css({"display": 'block', opacity: 0.7, 'width':$(document).width(),'height':$(document).height()});
-			    $('body').css({'overflow':'hidden'});
-
-			}
-
-			//form
-			$("#dialog").css('box-shadow', '0px 0px 2px 3px #000')
-                        .css('height', $(".content-dialog").height())
-                        .css('z-index', 1001)
-                        .hide();
-
-            $("#cerrar").click(
-                function(){
-
-                    $("#dialog").fadeOut(400, function(){
-                    			$(window).css('display', 'none');$('#screen').css('display', 'none');
-                    		});
-
-                }
-            );
-
-
-			//crear mapa
-			var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-				maxZoom: 18,
-				//attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-			}),
-			latlng = L.latLng(-41.77, -73.134);
-
-			var map = L.map('map', {center: latlng, zoom: 15, layers: [tiles]});
-
-			//iconos para marcadores
-
-			var yellowIcon = L.icon({
-			    iconUrl: 'static/js/images/Icon_y.png',
-			    shadowUrl: 'static/js/images/marker-shadow.png',
-
-			    iconSize:     [25, 41], // size of the icon
-			    shadowSize:   [41, 41], // size of the shadow
-			    iconAnchor:   [12.5, 41], // point of the icon which will correspond to marker's location
-			    shadowAnchor: [13, 41],  // the same for the shadow
-			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-			});
-
-			var redIcon = L.icon({
-			    iconUrl: 'static/js/images/Icon_r.png',
-			    shadowUrl: 'static/js/images/marker-shadow.png',
-
-			    iconSize:     [25, 41], // size of the icon
-			    shadowSize:   [41, 41], // size of the shadow
-			    iconAnchor:   [12.5, 41], // point of the icon which will correspond to marker's location
-			    shadowAnchor: [13, 41],  // the same for the shadow
-			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-			});
-
-			var orangeIcon = L.icon({
-			    iconUrl: 'static/js/images/Icon_o.png',
-			    shadowUrl: 'static/js/images/marker-shadow.png',
-
-			    iconSize:     [25, 41], // size of the icon
-			    shadowSize:   [41, 41], // size of the shadow
-			    iconAnchor:   [12.5, 41], // point of the icon which will correspond to marker's location
-			    shadowAnchor: [13, 41],  // the same for the shadow
-			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-			});
-
-			var purpleIcon = L.icon({
-			    iconUrl: 'static/js/images/Icon_p.png',
-			    shadowUrl: 'static/js/images/marker-shadow.png',
-
-			    iconSize:     [25, 41], // size of the icon
-			    shadowSize:   [41, 41], // size of the shadow
-			    iconAnchor:   [12.5, 41], // point of the icon which will correspond to marker's location
-			    shadowAnchor: [13, 41],  // the same for the shadow
-			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-			});
-
-			var greenIcon = L.icon({
-			    iconUrl: 'static/js/images/Icon_g.png',
-			    shadowUrl: 'static/js/images/marker-shadow.png',
-
-			    iconSize:     [25, 41], // size of the icon
-			    shadowSize:   [41, 41], // size of the shadow
-			    iconAnchor:   [12.5, 41], // point of the icon which will correspond to marker's location
-			    shadowAnchor: [13, 41],  // the same for the shadow
-			    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-			});
-
-			//marcadores
-			var markers = L.markerClusterGroup();
-
-
-			var marcadores = jQuery.parseJSON("{{serialized_obj}}".replace(/&quot;/g,"\""))
-
-			for(var i = 0; i < marcadores.length; i++){
-				var markerAux = L.marker([marcadores[i].fields.longitud, marcadores[i].fields.latitud]);
-				markerAux.bindPopup(marcadores[i].fields.description);
-				markers.addLayer(markerAux);
-			}
-
-
-			/*markers.addLayer(L.marker([-41.775, -73.134]));
-			markers.addLayer(L.marker([-41.7752, -73.134]));
-			markers.addLayer(L.marker([-41.7754, -73.134]));*/
-			map.addLayer(markers);
-
-			//mostrar dialogo
-			var estaPresionado = false;
-			var mostrarDialogo = function(){
-				block();
-	    	 	$("#dialog").center()
-	    	 			.fadeIn();
-	    	 	estaPresionado = false;
-			}
-
-			//eventos para crear marcador
-
-
-			map.on('mousedown', function(e) {
-				estaPresionado = true;
-				clearTimeout(this.downTimer);
-			    this.downTimer = setTimeout(mostrarDialogo, 1000);
-
-			});
-
-			map.on('mouseup', function(e) {
-				estaPresionado = false;
-				clearTimeout(this.downTimer);
-
-			});
-
-			//mousemove event
-
-			$(map).mousemove(function( event ) {
-			  	clearTimeout(this.downTimer);
-			  	this.downTimer = setTimeout(1000);
-			  	if(estaPresionado){
-			  		this.downTimer = setTimeout(mostrarDialogo, 1000);
-			  	}
-			});
-
+			init_map("{{serialized_obj}}".replace(/&quot;/g, "\""));
 		});
-
 	</script>
 </head>
 
 <body>
-<h1>Mapa Calbuco</h1>
-<div id="map" class="leaflet-container leaflet-fade-anim" style="float: left; width: 50%; height: 400px; min-width: 250px; border: 1px solid rgb(204, 204, 204); position: relative;">
-</div>
+	<div class="container" style="margin-top: 30px;">
+		<h1>Mapa Calbuco</h1>
+		<div class="row">
+			<div class="col-md-9">
+				<div id="map" 
+					class="leaflet-container leaflet-fade-anim" 
+					style="float: left; width: 100%; height: 600px; min-width: 250px; border: 1px solid rgb(204, 204, 204); position: relative;"></div>
+			</div>
+			<div class="col-md-3">
 
-<div id="screen">
-</div>
-<div id="dialog" title="Create new user">
+				<h3>Categorías</h3>
+				<br>
 
-  <form>
-      <label for="name">Nombre del Marcador</label>
-      <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
-      <br>
-      <label for="email">Categoria</label>
-      <select>
-      	<option>Casa inundada</option>
-      	<option>Puente Quebrado</option>
-      	<option>Auto chocado</option>
-      </select>
-      <br>
-      <input type="submit">
+				<ul style="list-style: none">
+					<li><button type="button" class="btn btn-default">Todos</button></li>
+					<li><button type="button" class="btn btn-default" style="background: blue; color:white; font-weight: bold; border: solid 1px blue">Categoria 1</button></li>
+					<li><button type="button" class="btn btn-default" style="background: red; color:white; font-weight: bold; border: solid 1px red">Categoria 2</button></li>
+					<li><button type="button" class="btn btn-default" style="background: green; color:white; font-weight: bold; border: solid 1px green">Categoria 3</button></li>
+					<li><button type="button" class="btn btn-default" style="background: purple; color:white; font-weight: bold; border: solid 1px purple">Categoria 4</button></li>
+					<li><button type="button" class="btn btn-default" style="background: orange; color:white; font-weight: bold; border: solid 1px orange">Categoria 5</button></li>
+				</ul>
+				
 
-  </form>
-  <button id="cerrar">Cerrar</button>
-</div>
+			</div>
+		</div>
+	</div>
+	<div id="screen">
+	</div>
+	<div id="dialog" title="Create new user">
+
+	  <form>
+	      <label for="name">Nombre del Marcador</label>
+	      <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+	      <br>
+	      <label for="email">Categoria</label>
+	      <select>
+	      	<option>Casa inundada</option>
+	      	<option>Puente Quebrado</option>
+	      	<option>Auto chocado</option>
+	      </select>
+	      <br>
+	      <input type="submit">
+
+	  </form>
+	  <button id="cerrar">Cerrar</button>
+	</div>
 
 </body>
 
