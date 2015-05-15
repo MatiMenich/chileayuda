@@ -15,9 +15,11 @@ class Mark(models.Model):
     category = models.ForeignKey('Category')
     description = models.CharField(max_length=50)
     def __str__(self):
-        return "X= "+ self.longitud + " Y= " + self.latitud + " Categoría= " + self.category
+        return "X= "+ str(self.longitud) + " Y= " + str(self.latitud) + " Categoría= " + str(self.category)
     def get_x(self):
         return self.longitud
     def get_y(self):
         return self.latitud
-
+    def get_marks_by_category(id_category):
+        marks = Mark.objects.filter(category=id_category)
+        return marks
