@@ -1,0 +1,42 @@
+[
+    {
+        "model": "maps.Category",
+        "pk": 1,
+        "fields": {
+            "category": "Categoría 1",
+            "style": "cat1"
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 2,
+        "fields": {
+            "category": "Categoría 2",
+            "style": "cat2"
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 3,
+        "fields": {
+            "category": "Categoría 3",
+            "style": "cat3"
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 4,
+        "fields": {
+            "category": "Categoría 4",
+            "style": "cat4"
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 5,
+        "fields": {
+            "category": "Categoría 5",
+            "style": "cat5"
+        }
+    }
+]	
