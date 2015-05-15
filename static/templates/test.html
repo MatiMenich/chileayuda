@@ -39,11 +39,9 @@
 
 				<ul style="list-style: none">
 					<li><button type="button" class="btn btn-default">Todos</button></li>
-					<li><button type="button" class="btn btn-default" style="background: blue; color:white; font-weight: bold; border: solid 1px blue">Categoria 1</button></li>
-					<li><button type="button" class="btn btn-default" style="background: red; color:white; font-weight: bold; border: solid 1px red">Categoria 2</button></li>
-					<li><button type="button" class="btn btn-default" style="background: green; color:white; font-weight: bold; border: solid 1px green">Categoria 3</button></li>
-					<li><button type="button" class="btn btn-default" style="background: purple; color:white; font-weight: bold; border: solid 1px purple">Categoria 4</button></li>
-					<li><button type="button" class="btn btn-default" style="background: orange; color:white; font-weight: bold; border: solid 1px orange">Categoria 5</button></li>
+					{% for category in categories %}
+						<li><button type="button" class="btn btn-default" style="background: blue; color:white; font-weight: bold; border: solid 1px blue">category.category</button></li>
+					{% endfor %}
 				</ul>
 				
 
