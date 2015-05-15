@@ -53,20 +53,31 @@
 	<div id="dialog" title="Create new user">
 
 	  <form>
-	      <label for="name">Nombre del Marcador</label>
-	      <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
-	      <br>
-	      <label for="email">Categoria</label>
-	      <select>
-	      	<option>Casa inundada</option>
-	      	<option>Puente Quebrado</option>
-	      	<option>Auto chocado</option>
-	      </select>
-	      <br>
-	      <input type="submit">
+		  <div class="panel-body">
+
+                                <!-- para cada curso -->
+                                <!-- jimbo todo: estan como alrevés los academic y los executives -->
+                                <div class="row">
+
+                                        <label class="col-sm-6 control-label">Descripcion <label style="color:red">*</label></label>
+                                        <div class="col-sm-4">
+                                            {{ markform.description }}
+                                        </div>
+
+                                </div>
+                                <div class="row">
+
+                                        <label class="col-sm-6 control-label">Categoria <label style="color:red">*</label></label>
+                                        <div class="col-sm-4">
+                                           {{ markform.category }}
+                                        </div>
+
+                                </div>
+                            </div>
+
+
 
 	  </form>
-	  <button id="cerrar">Cerrar</button>
 	</div>
 
 </body>
