@@ -40,7 +40,7 @@
 				<ul style="list-style: none">
 					<li><button type="button" class="btn btn-default">Todos</button></li>
 					{% for category in categories %}
-						<li><button type="button" class="btn btn-default" style="background: blue; color:white; font-weight: bold; border: solid 1px blue">category.category</button></li>
+						<li><button type="button" class="btn btn-default" style={{category.style}}>{{category.category}}</button></li>
 					{% endfor %}
 				</ul>
 				

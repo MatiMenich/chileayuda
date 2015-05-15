@@ -3,7 +3,7 @@
         "model": "maps.Category",
         "pk": 1,
         "fields": {
-            "category": "Categoría 1",
+            "category": "Categoria1",
             "style": "cat1"
         }
     },
@@ -11,7 +11,7 @@
         "model": "maps.Category",
         "pk": 2,
         "fields": {
-            "category": "Categoría 2",
+            "category": "Categoria2",
             "style": "cat2"
         }
     },
@@ -19,7 +19,7 @@
         "model": "maps.Category",
         "pk": 3,
         "fields": {
-            "category": "Categoría 3",
+            "category": "Categoria3",
             "style": "cat3"
         }
     },
@@ -27,7 +27,7 @@
         "model": "maps.Category",
         "pk": 4,
         "fields": {
-            "category": "Categoría 4",
+            "category": "Categoria4",
             "style": "cat4"
         }
     },
@@ -35,7 +35,7 @@
         "model": "maps.Category",
         "pk": 5,
         "fields": {
-            "category": "Categoría 5",
+            "category": "Categoria5",
             "style": "cat5"
         }
     }
