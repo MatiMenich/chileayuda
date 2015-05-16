@@ -51,33 +51,40 @@
 	<div id="screen">
 	</div>
 	<div id="dialog" title="Create new user">
+		<form class="form-horizontal">
+			<fieldset>
 
-	  <form>
-		  <div class="panel-body">
+			<!-- Form Name -->
+			<legend>Form Name</legend>
 
-                                <!-- para cada curso -->
-                                <!-- jimbo todo: estan como alrevés los academic y los executives -->
-                                <div class="row">
+			<!-- Text input-->
+			<div class="form-group">
+			  <label class="col-md-4 control-label">Text Input</label>
+			  <div class="col-md-4">
+			  {{ markform.description }}
 
-                                        <label class="col-sm-6 control-label">Descripcion <label style="color:red">*</label></label>
-                                        <div class="col-sm-4">
-                                            {{ markform.description }}
-                                        </div>
+			  </div>
+			</div>
 
-                                </div>
-                                <div class="row">
+			<!-- Select Basic -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label">Select Basic</label>
+			  <div class="col-md-6">
+				{{ markform.category }}
+			  </div>
+			</div>
 
-                                        <label class="col-sm-6 control-label">Categoria <label style="color:red">*</label></label>
-                                        <div class="col-sm-4">
-                                           {{ markform.category }}
-                                        </div>
+			<!-- Button -->
+			<div class="form-group">
+			  <label class="col-md-4 control-label" for="enviar"></label>
+			  <div class="col-md-4">
+				<button id="enviar" name="enviar" class="btn btn-info">Enviar</button>
+			  </div>
+			</div>
 
-                                </div>
-                            </div>
+			</fieldset>
+			</form>
 
-
-
-	  </form>
 	</div>
 
 </body>
