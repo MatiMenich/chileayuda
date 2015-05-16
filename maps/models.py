@@ -23,3 +23,10 @@ class Mark(models.Model):
     def get_marks_by_category(id_category):
         marks = Mark.objects.filter(category=id_category)
         return marks
+    def get_marks_groupBy_category():
+        marcadores = [];
+        categorias = Category.objects.all()
+        for categoria in categorias:
+            marcadores.append(Mark.get_marks_by_category(categoria.pk))
+        return marcadores
+

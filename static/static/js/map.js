@@ -57,6 +57,8 @@ var greenIcon = L.icon({
 
 function init_map(json_str) {
 
+    var iconos = [yellowIcon, greenIcon, redIcon, orangeIcon, purpleIcon];
+
 	//centrar
     jQuery.fn.center = function() {
         this.css("position", "absolute");
@@ -118,11 +120,13 @@ function init_map(json_str) {
     var marcadores = jQuery.parseJSON(json_str);
 
     for (var i = 0; i < marcadores.length; i++) {
-        var markerAux = L.marker([marcadores[i].fields.longitud, marcadores[i].fields.latitud], {
-            icon: redIcon
-        });
-        markerAux.bindPopup(marcadores[i].fields.description);
-        markers.addLayer(markerAux);
+        for(var j = 0; j < marcadores[i].length; j++){
+            var markerAux = L.marker([marcadores[i][j].fields.longitud, marcadores[i][j].fields.latitud], {
+                icon: iconos[i]
+            });
+            markerAux.bindPopup(marcadores[i][j].fields.description);
+            markers.addLayer(markerAux);
+        }
     }
 
     map.addLayer(markers);
