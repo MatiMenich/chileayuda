@@ -5,7 +5,7 @@ from maps.forms import *
 
 def home(request):
     serialized_obj = encodeJson(Mark.get_marks_groupBy_category())
-    categories = Category.objects.all() 
+    categories = Category.objects.all()
     
     markform = MarkForm(request.POST or None, prefix="marks")
 
