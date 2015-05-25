@@ -134,8 +134,8 @@ function init_map(json_str) {
     //mostrar dialogo
     var estaPresionado = false;
     var mostrarDialogo = function(e) {
-        $("#latitud").value = e.latlng.lat;
-        $("#longitud").value = e.latlng.lat;
+        $("#latitud").val(e.latlng.lat);
+        $("#longitud").val(e.latlng.lng);
         jQuery.fn.block();
         $("#dialog").center()
             .fadeIn();

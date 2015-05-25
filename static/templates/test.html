@@ -51,7 +51,7 @@
 	<div id="screen">
 	</div>
 	<div id="dialog" title="Create new user">
-		<form class="form-horizontal">
+		<form class="form-horizontal" method="post">{% csrf_token %}
 			<fieldset>
 
 			<!-- Form Name -->
@@ -59,7 +59,7 @@
 
 			<!-- Text input-->
 			<div class="form-group">
-			  <label class="col-md-4 control-label">Text Input</label>
+			  <label class="col-md-4 control-label">Descripción</label>
 			  <div class="col-md-4">
 			  {{ markform.description }}
 
@@ -68,7 +68,7 @@
 
 			<!-- Select Basic -->
 			<div class="form-group">
-			  <label class="col-md-4 control-label">Select Basic</label>
+			  <label class="col-md-4 control-label">Categoría</label>
 			  <div class="col-md-6">
 				{{ markform.category }}
 			  </div>
@@ -80,6 +80,12 @@
 			  <div class="col-md-4">
 				<button id="enviar" name="enviar" class="btn btn-info">Enviar</button>
 			  </div>
+			</div>
+			<div>
+				{{ markform.latitud }}
+			</div>
+			<div>
+				{{ markform.longitud }}
 			</div>
 
 			</fieldset>
