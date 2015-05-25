@@ -133,7 +133,9 @@ function init_map(json_str) {
 
     //mostrar dialogo
     var estaPresionado = false;
-    var mostrarDialogo = function() {
+    var mostrarDialogo = function(e) {
+        $("#latitud").value = e.latlng.lat;
+        $("#longitud").value = e.latlng.lat;
         jQuery.fn.block();
         $("#dialog").center()
             .fadeIn();
@@ -146,7 +148,7 @@ function init_map(json_str) {
     map.on('mousedown', function(e) {
         estaPresionado = true;
         clearTimeout(this.downTimer);
-        this.downTimer = setTimeout(mostrarDialogo, 1000);
+        this.downTimer = setTimeout(mostrarDialogo, 1000, e);
 
     });
 
