@@ -121,7 +121,7 @@ function init_map(json_str) {
 
     for (var i = 0; i < marcadores.length; i++) {
         for(var j = 0; j < marcadores[i].length; j++){
-            var markerAux = L.marker([marcadores[i][j].fields.longitud, marcadores[i][j].fields.latitud], {
+            var markerAux = L.marker([marcadores[i][j].fields.latitud, marcadores[i][j].fields.longitud], {
                 icon: iconos[i]
             });
             markerAux.bindPopup(marcadores[i][j].fields.description);
