@@ -118,16 +118,20 @@ function init_map(json_str) {
 
 
     var marcadores = jQuery.parseJSON(json_str);
-
-    for (var i = 0; i < marcadores.length; i++) {
-        for(var j = 0; j < marcadores[i].length; j++){
-            var markerAux = L.marker([marcadores[i][j].fields.latitud, marcadores[i][j].fields.longitud], {
-                icon: iconos[i]
-            });
-            markerAux.bindPopup(marcadores[i][j].fields.description);
-            markers.addLayer(markerAux);
-        }
+    function cargarTodos(){
+        markers.clearLayers();
+        for (var i = 0; i < marcadores.length; i++) {
+            for(var j = 0; j < marcadores[i].length; j++){
+                var markerAux = L.marker([marcadores[i][j].fields.latitud, marcadores[i][j].fields.longitud], {
+                    icon: iconos[i]
+                });
+                markerAux.bindPopup(marcadores[i][j].fields.description);
+                markers.addLayer(markerAux);
+            }
+        }    
     }
+    
+    cargarTodos();
 
     map.addLayer(markers);
 
@@ -167,4 +171,21 @@ function init_map(json_str) {
             this.downTimer = setTimeout(mostrarDialogo, 1000);
         }
     });
+
+    //filtrar
+    $("button.filtro").click(function(){
+        var categoria = $(this).attr('categoria') - 1;
+        markers.clearLayers();
+        for(var j = 0; j < marcadores[categoria].length; j++){
+            var markerAux = L.marker([marcadores[categoria][j].fields.latitud, marcadores[categoria][j].fields.longitud], {
+                icon: iconos[categoria]
+            });
+            markerAux.bindPopup(marcadores[categoria][j].fields.description);
+            markers.addLayer(markerAux);
+        }
+    });
+
+    $("#todos").click(cargarTodos);
+
+
 }

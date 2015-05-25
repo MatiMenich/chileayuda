@@ -30,7 +30,7 @@
 			<div class="col-md-9">
 				<div id="map" 
 					class="leaflet-container leaflet-fade-anim" 
-					style="float: left; width: 100%; height: 600px; min-width: 250px; border: 1px solid rgb(204, 204, 204); position: relative;"></div>
+					style="float: left; width: 100%; height: 500px; min-width: 250px; border: 1px solid rgb(204, 204, 204); position: relative;"></div>
 			</div>
 			<div class="col-md-3">
 
@@ -38,9 +38,9 @@
 				<br>
 
 				<ul style="list-style: none">
-					<li><button type="button" class="btn btn-default">Todos</button></li>
+					<li><button id="todos" type="button" class="btn btn-default">Todos</button></li>
 					{% for category in categories %}
-						<li><button type="button" class="btn btn-default" style={{category.style}}>{{category.category}}</button></li>
+						<li><button categoria="{{category.id}}" type="button" class="btn btn-default filtro" style={{category.style}}>{{category.category}}</button></li>
 					{% endfor %}
 				</ul>
 				
