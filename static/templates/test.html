@@ -18,13 +18,11 @@
 	<script type="text/javascript">
 		$(function() {
 			for (i = 1; i < 3; i++) {
-
 				var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 							maxZoom: 18,
 							//attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
 						}),
 						latlng = L.latLng(-41.77, -73.134);
-
 				var map = L.map("map" + i, {
 					center: latlng,
 					zoom: 15,
@@ -32,24 +30,33 @@
 				});
 				init_map("{{serialized_obj}}".replace(/&quot;/g, "\""),"map" + i,map,i);
 			}
-
-
-
-
-				//maps[0]=init_map("{{serialized_obj}}".replace(/&quot;/g, "\""),"map2");
-				//maps[1]=init_map("{{serialized_obj}}".replace(/&quot;/g, "\""),"map",map);
-
-
 		});
+		function update_select_form(){
+			var catastrophe = parseInt(document.getElementById("actual-catastrophe").value);
+			var categories = jQuery.parseJSON("{{categories2}}".replace(/&quot;/g, "\""));
+			var actualcat = categories[catastrophe-1];
 
+			for (var i = 0; i < actualcat.length; i++) {
+				$('#category-select-list').append($('<option>', {
+					value: actualcat[i].pk,
+					text: actualcat[i].fields.category
+				}));
+			}
+		}
 
+		function delete_select_form(){
+			$('#category-select-list')
+				.empty()
+				.append('<option selected="selected" value="0">Seleccione una categoría</option>')
+			;
+		}
 
 	</script>
 </head>
-
 <body>
 	<div class="container" style="margin-top: 30px;">
 		<h1>Mapa Calbuco</h1>
+		<input id="actual-catastrophe" value="0">
 		<div class="row">
 			<div class="col-md-9">
 				<div id="map1"
@@ -79,6 +86,7 @@
 	</div>
 	<div id="screen">
 	</div>
+
 	<div id="dialog" title="Create new user">
 		<form class="form-horizontal" method="post">{% csrf_token %}
 			<fieldset>
@@ -126,5 +134,5 @@
 	</div>
 
 </body>
-
+</html>
 

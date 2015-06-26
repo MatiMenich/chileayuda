@@ -129,10 +129,8 @@ function MapHandler(categorias, marcadores, latitud, longitud, mapId, map, catas
         
         function cargarTodos(marcadores){
             markers.clearLayers();
-            console.log(marcadores)
             for (var i = 0; i < marcadores.length; i++) {
                 if(catastrophe == i+1) {
-                    console.log(marcadores[i].length)
                     for (var j = 0; j < marcadores[i].length; j++) {
                         if (marcadores[i][j].length > 0) {
                             for (var k = 0; k<marcadores[i][j].length; k++) {
@@ -169,6 +167,12 @@ function MapHandler(categorias, marcadores, latitud, longitud, mapId, map, catas
 
         this.map.on('mousedown', function(e) {
             estaPresionado = true;
+            console.log($("#actual-catastrophe")[0].value);
+            if($("#actual-catastrophe")[0].value != mapId.substring(3) ) {
+                $("#actual-catastrophe").val(mapId.substring(3));
+                delete_select_form();
+                update_select_form();
+            }
             clearTimeout(this.downTimer);
             this.downTimer = setTimeout(mostrarDialogo, 1000, e);
 

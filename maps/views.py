@@ -23,7 +23,7 @@ def home(request):
 	serialized_obj = encodeJson(s)
 	number_catastrophes = len(s)
 	categories = Category.objects.all()
-	c = Category.get_categories_by_cat(Category) #categorias separadas por catastrofes
+	categories2 = encodeJson2(Category.get_categories_by_cat(Category)) #categorias separadas por catastrofes
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
 	return render_to_response("test.html", locals(), context_instance = RequestContext(request))
 
@@ -35,4 +35,9 @@ def encodeJson(object):
 			string2 += serializers.serialize('json', var) + ","
 		string2 = string2[:len(string2)-1] + "]"
 		string += string2 +","
+	return string[:len(string)-1] + "]"
+def encodeJson2(object):
+	string = '['
+	for cat in object:
+		string+= serializers.serialize('json',cat)+ ","
 	return string[:len(string)-1] + "]"
