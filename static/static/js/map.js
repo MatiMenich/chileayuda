@@ -54,123 +54,159 @@ var greenIcon = L.icon({
     popupAnchor: [-3, -76] // point from which the popup should open relative to the iconAnchor
 });
 
+var iconos = [yellowIcon, greenIcon, redIcon, orangeIcon, purpleIcon];
 
-function init_map(json_str) {
+function MapHandler(categorias, marcadores, latitud, longitud, mapId, map, catastrophe) {
+    this.categorias = categorias;
+    this.marcadores = marcadores;
+    this.latitud = latitud;
+    this.longitud = longitud;
+    this.mapId = mapId;
+    this.map = map
+    this.catastrophe = catastrophe
+    this.loadMap = function(){
 
-    var iconos = [yellowIcon, greenIcon, redIcon, orangeIcon, purpleIcon];
-
-	//centrar
-    jQuery.fn.center = function() {
-        this.css("position", "absolute");
-        this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 3) +
-            $(window).scrollTop()) + "px");
-        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
-            $(window).scrollLeft()) + "px");
-        return this;
-    }
+        //centrar
+        jQuery.fn.center = function() {
+            this.css("position", "absolute");
+            this.css("top", Math.max(0, (($(window).height() - $(this).outerHeight()) / 3) +
+                $(window).scrollTop()) + "px");
+            this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+                $(window).scrollLeft()) + "px");
+            return this;
+        }
 
 
-    //block screen
-    jQuery.fn.block = function(){
-        $("#screen").css({
-            "display": 'block',
-            opacity: 0.7,
-            'width': $(document).width(),
-            'height': $(document).height()
-        });
-        $('body').css({
-            'overflow': 'hidden'
-        });
-    }
-
-    //form
-    $("#dialog").css('box-shadow', '0px 0px 2px 3px #000')
-        .css('height', $(".content-dialog").height())
-        .css('z-index', 1001)
-        .hide();
-
-    $("#cerrar").click(
-        function() {
-
-            $("#dialog").fadeOut(400, function() {
-                $(window).css('display', 'none');
-                $('#screen').css('display', 'none');
+        //block screen
+        jQuery.fn.block = function(){
+            $("#screen").css({
+                "display": 'block',
+                opacity: 0.7,
+                'width': $(document).width(),
+                'height': $(document).height()
             });
-
+            $('body').css({
+                'overflow': 'hidden'
+            });
         }
-    );
 
-    //crear mapa
-    var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            //attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-        }),
-        latlng = L.latLng(-41.77, -73.134);
+        //form
+        $("#dialog").css('box-shadow', '0px 0px 2px 3px #000')
+            .css('height', $(".content-dialog").height())
+            .css('z-index', 1001)
+            .hide();
 
-    var map = L.map('map', {
-        center: latlng,
-        zoom: 15,
-        layers: [tiles]
-    });
+        $("#cerrar").click(
+            function() {
 
-    //marcadores
-    var markers = L.markerClusterGroup();
-
-
-    var marcadores = jQuery.parseJSON(json_str);
-    function cargarTodos(){
-        markers.clearLayers();
-        for (var i = 0; i < marcadores.length; i++) {
-            for(var j = 0; j < marcadores[i].length; j++){
-                var markerAux = L.marker([marcadores[i][j].fields.latitud, marcadores[i][j].fields.longitud], {
-                    icon: iconos[i]
+                $("#dialog").fadeOut(400, function() {
+                    $(window).css('display', 'none');
+                    $('#screen').css('display', 'none');
                 });
-                markerAux.bindPopup(marcadores[i][j].fields.description);
-                markers.addLayer(markerAux);
+
             }
-        }    
-    }
-    
-    cargarTodos();
+        );
 
-    map.addLayer(markers);
+        
+        /*
+        //crear mapa
+        var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                //attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
+            }),
+            latlng = L.latLng(this.latitud, this.longitud);
 
-    //mostrar dialogo
-    var estaPresionado = false;
-    var mostrarDialogo = function(e) {
-        $("#latitud").val(e.latlng.lat);
-        $("#longitud").val(e.latlng.lng);
-        jQuery.fn.block();
-        $("#dialog").center()
-            .fadeIn();
-        estaPresionado = false;
-    }
-
-    //eventos para crear marcador
+        var map = L.map(this.mapId, {
+            center: latlng,
+            zoom: 15,
+            layers: [tiles]
+        });
+        */
+        //marcadores
+        var markers = L.markerClusterGroup();
 
 
-    map.on('mousedown', function(e) {
-        estaPresionado = true;
-        clearTimeout(this.downTimer);
-        this.downTimer = setTimeout(mostrarDialogo, 1000, e);
-
-    });
-
-    map.on('mouseup', function(e) {
-        estaPresionado = false;
-        clearTimeout(this.downTimer);
-
-    });
-
-    //mousemove event
-
-    $(map).mousemove(function(event) {
-        clearTimeout(this.downTimer);
-        this.downTimer = setTimeout(1000);
-        if (estaPresionado) {
-            this.downTimer = setTimeout(mostrarDialogo, 1000);
+        
+        function cargarTodos(marcadores){
+            markers.clearLayers();
+            console.log(marcadores)
+            for (var i = 0; i < marcadores.length; i++) {
+                if(catastrophe == i+1) {
+                    console.log(marcadores[i].length)
+                    for (var j = 0; j < marcadores[i].length; j++) {
+                        if (marcadores[i][j].length > 0) {
+                            for (var k = 0; k<marcadores[i][j].length; k++) {
+                                var markerAux = L.marker([marcadores[i][j][k].fields.latitud, marcadores[i][j][0].fields.longitud], {
+                                    icon: iconos[i]
+                                });
+                                markerAux.bindPopup(marcadores[i][j][k].fields.description);
+                                markers.addLayer(markerAux);
+                            }
+                        }
+                    }
+                }
+            }
         }
-    });
+
+        cargarTodos(this.marcadores);
+
+        this.map.addLayer(markers);
+
+        //mostrar dialogo
+        var estaPresionado = false;
+        var mostrarDialogo = function(e) {
+            $("#latitud").val(e.latlng.lat);
+            $("#longitud").val(e.latlng.lng);
+            $("#id-map").val(mapId);
+            jQuery.fn.block();
+            $("#dialog").center()
+                .fadeIn();
+            estaPresionado = false;
+        }
+
+        //eventos para crear marcador
+
+
+        this.map.on('mousedown', function(e) {
+            estaPresionado = true;
+            clearTimeout(this.downTimer);
+            this.downTimer = setTimeout(mostrarDialogo, 1000, e);
+
+        });
+
+        this.map.on('mouseup', function(e) {
+            estaPresionado = false;
+            clearTimeout(this.downTimer);
+
+        });
+
+        //mousemove event
+
+        $(this.mapId).mousemove(function(event) {
+            clearTimeout(this.downTimer);
+            this.downTimer = setTimeout(1000);
+            if (estaPresionado) {
+                this.downTimer = setTimeout(mostrarDialogo, 1000);
+            }
+        });
+
+    }
+}
+
+
+function init_map(json_str,id,map,catastrophe) {
+
+    var mapHandler = new MapHandler(
+            "",
+            jQuery.parseJSON(json_str),
+            -41.77, 
+            -73.134,
+            id,
+            map,
+            catastrophe
+        )
+
+    mapHandler.loadMap();
 
     //filtrar
     $("button.filtro").click(function(){
@@ -185,7 +221,7 @@ function init_map(json_str) {
         }
     });
 
-    $("#todos").click(cargarTodos);
+    //$("#todos").click(cargarTodos);
 
 
 }

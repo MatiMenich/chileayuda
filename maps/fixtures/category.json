@@ -1,10 +1,32 @@
 [
     {
+        "model": "maps.Catastrophes",
+        "pk": 1,
+        "fields": {
+            "name":"nooorte",
+            "latitud":0.0,
+            "longitud":0.0,
+            "fecha":"2014-09-11"
+        }
+    },
+    {
+        "model": "maps.Catastrophes",
+        "pk": 2,
+        "fields": {
+            "name":"suuuuur",
+            "latitud":0.0,
+            "longitud":0.0,
+            "fecha":"2014-09-11"
+        }
+    },
+    {
         "model": "maps.Category",
         "pk": 1,
         "fields": {
             "category": "Categoria1",
-            "style": "cat1"
+            "style": "cat1",
+            "catastrophe": 1
+
         }
     },
 	{
@@ -12,7 +34,8 @@
         "pk": 2,
         "fields": {
             "category": "Categoria2",
-            "style": "cat2"
+            "style": "cat2",
+            "catastrophe": 1
         }
     },
 	{
@@ -20,7 +43,8 @@
         "pk": 3,
         "fields": {
             "category": "Categoria3",
-            "style": "cat3"
+            "style": "cat3",
+            "catastrophe": 1
         }
     },
 	{
@@ -28,7 +52,8 @@
         "pk": 4,
         "fields": {
             "category": "Categoria4",
-            "style": "cat4"
+            "style": "cat4",
+            "catastrophe": 1
         }
     },
 	{
@@ -36,7 +61,60 @@
         "pk": 5,
         "fields": {
             "category": "Categoria5",
-            "style": "cat5"
+            "style": "cat5",
+            "catastrophe": 1
+        }
+    },
+    {
+        "model": "maps.Category",
+        "pk": 6,
+        "fields": {
+            "category": "Categoria1",
+            "style": "cat1",
+            "catastrophe": 2
+
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 7,
+        "fields": {
+            "category": "Categoria2",
+            "style": "cat2",
+            "catastrophe": 2
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 8,
+        "fields": {
+            "category": "Categoria3",
+            "style": "cat3",
+            "catastrophe": 2
+        }
+    },
+    {
+        "model": "maps.Mark",
+        "pk": 1,
+        "fields": {
+            "latitud": -41.77,
+            "longitud": -73.134,
+            "category": 1,
+            "description": "asdasdsad",
+            "catastrophe": 1
+        }
+    },
+    {
+        "model": "maps.Mark",
+        "pk": 2,
+        "fields": {
+            "latitud": -41.77,
+            "longitud": -73.134,
+            "category": 6,
+            "description": "asdasdsad",
+            "catastrophe": 2
         }
     }
+
+
 ]	
