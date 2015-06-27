@@ -15,20 +15,9 @@
 
 	<script type="text/javascript">
 		$(function() {
-			for (i = 1; i < 3; i++) {
-				var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-							maxZoom: 18,
-							//attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors, Points &copy 2012 LINZ'
-						}),
-						latlng = L.latLng(-41.77, -73.134);
-				var map = L.map("map" + i, {
-					center: latlng,
-					zoom: 15,
-					layers: [tiles]
-				});
-				init_map("{{serialized_obj}}".replace(/&quot;/g, "\""),"map" + i,map,i);
+				init_map("{{serialized_obj}}".replace(/&quot;/g, "\""));
 			}
-		});
+		);
 		function update_select_form(){
 			var catastrophe = parseInt(document.getElementById("actual-catastrophe").value);
 			var categories = jQuery.parseJSON("{{categories}}".replace(/&quot;/g, "\""));
@@ -58,7 +47,7 @@
 		<input id="actual-catastrophe" value="0">
 
 		{% for cat_dict in instance_dict %}
-
+				
 				<h1>{{cat_dict|get_item:'place'}}</h1>
 
 				<div class="row">
@@ -73,9 +62,9 @@
 						<h3>Categorías</h3><br>
 
 						<ul style="list-style: none">
-							<li><button id="cat1" type="button" class="btn btn-default cat1">Todos</button></li>
+							<li><button type="button" class="btn btn-default all {{forloop.counter0}}">Todos</button></li>
 							{% for category in cat_dict|get_item:'categories' %}
-								<li><button categoria="{{category.id}}" type="button" class="btn btn-default filtro {{category.style}}" >{{category.category}}</button></li>
+								<li><button categoria="{{forloop.counter0}}" type="button" class="btn btn-default filtro cat{{forloop.counter0}} {{forloop.parentloop.counter0}}" >{{category.category}}</button></li>
 							{% endfor %}
 						</ul>
 

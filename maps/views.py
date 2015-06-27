@@ -21,7 +21,7 @@ def home2(request):
 			catas = Catastrophes.objects.get(pk=int(idmap[3:]))
 			new_mark = Mark(latitud=lat, longitud=lon, description=des, category=cat, catastrophe=catas)
 			new_mark.save()
-			return HttpResponseRedirect(reverse("maps.views.home"))
+			return HttpResponseRedirect(reverse("maps.views.home2"))
 
 	serialized_obj = encodeJson(Mark.get_marks_groupBy_catastrophe(Mark))
 	categories2 = Category.get_categories_by_cat(Category)
