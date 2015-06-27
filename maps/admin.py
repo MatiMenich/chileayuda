@@ -4,4 +4,5 @@ from .models import *
 
 admin.site.register(Category)
 admin.site.register(Mark)
+admin.site.register(Catastrophes)
 
