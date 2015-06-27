@@ -33,7 +33,7 @@ def home2(request):
 		i += 1
 	categories = encodeJson2(categories2)
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
-	return render_to_response("index.html", locals(), context_instance=RequestContext(request))
+	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
 
 
 def home(request):
@@ -57,8 +57,7 @@ def home(request):
 	categories2 = Category.get_categories_by_cat(Category)  # categorias separadas por catastrofes
 	aux = 0
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
-	return render_to_response("test.html", locals(), context_instance=RequestContext(request))
-
+	return render_to_response("test.html", locals(), context_instance = RequestContext(request))
 
 def encodeJson(object):
 	string = '['
