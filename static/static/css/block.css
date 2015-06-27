@@ -14,3 +14,19 @@
 	padding: 20px;
 	background: white;
 }
+
+.btn.cat1{
+	background-color: red;
+}
+.btn.cat2{
+	background-color: blue;
+}
+.btn.cat3{
+	background-color: green;
+}
+.btn.cat4{
+	background-color: yellow;
+}
+.btn.cat5{
+	background-color: cyan;
+}
