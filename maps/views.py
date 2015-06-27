@@ -7,11 +7,10 @@ from django.core.urlresolvers import reverse
 from django.template.defaulttags import register
 
 
-
 def home2(request):
 	markform = MarkForm(request.POST or None, prefix="marks")
 
-	if request.method =="POST":
+	if request.method == "POST":
 		if markform.is_valid():
 			des = markform.cleaned_data['description']
 			cat = markform.cleaned_data['category']
@@ -27,20 +26,19 @@ def home2(request):
 	categories2 = Category.get_categories_by_cat(Category)
 
 	instance_dict = []
-	i=1
+	i = 1
 	for cat in Catastrophes.objects.all():
-		d = {'place': cat.name, 'idcat':cat.pk, 'idmap': str("map"+str(i)), 'categories': categories2[i-1]}
+		d = {'place': cat.name, 'idcat':cat.pk, 'idmap': str("map" + str(i)), 'categories': categories2[i - 1]}
 		instance_dict.append(d)
-		i+=1
+		i += 1
 	categories = encodeJson2(categories2)
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
-	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
-
+	return render_to_response("index.html", locals(), context_instance=RequestContext(request))
 
 
 def home(request):
 	markform = MarkForm(request.POST or None, prefix="marks")
-	if request.method =="POST":
+	if request.method == "POST":
 		if markform.is_valid():
 			des = markform.cleaned_data['description']
 			cat = markform.cleaned_data['category']
@@ -56,10 +54,11 @@ def home(request):
 	serialized_obj = encodeJson(s)
 	number_catastrophes = len(s)
 	categories = Category.objects.all()
-	categories2 = Category.get_categories_by_cat(Category)#categorias separadas por catastrofes
+	categories2 = Category.get_categories_by_cat(Category)  # categorias separadas por catastrofes
 	aux = 0
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
-	return render_to_response("test.html", locals(), context_instance = RequestContext(request))
+	return render_to_response("test.html", locals(), context_instance=RequestContext(request))
+
 
 def encodeJson(object):
 	string = '['
@@ -67,15 +66,17 @@ def encodeJson(object):
 		string2 = "["
 		for var in cat:
 			string2 += serializers.serialize('json', var) + ","
-		string2 = string2[:len(string2)-1] + "]"
-		string += string2 +","
-	return string[:len(string)-1] + "]"
+		string2 = string2[:len(string2) - 1] + "]"
+		string += string2 + ","
+	return string[:len(string) - 1] + "]"
+
 
 def encodeJson2(object):
 	string = '['
 	for cat in object:
-		string+= serializers.serialize('json',cat)+ ","
-	return string[:len(string)-1] + "]"
+		string += serializers.serialize('json', cat) + ","
+	return string[:len(string) - 1] + "]"
+
 
 @register.filter
 def get_item(dictionary, key):

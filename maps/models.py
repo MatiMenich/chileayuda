@@ -5,10 +5,12 @@ class Catastrophes(models.Model):
     latitud = models.FloatField()
     longitud = models.FloatField()
     fecha = models.DateField()
+    def __str__(self):
+        return self.name
 
 class Category(models.Model):
     category = models.CharField(max_length=50)
-    style = models.CharField(max_length=50,default="")
+    style = models.CharField(max_length=50, default="")
     catastrophe = models.ForeignKey('Catastrophes')
 
     def __str__(self):
@@ -36,7 +38,7 @@ class Mark(models.Model):
     catastrophe = models.ForeignKey('Catastrophes')
 
     def __str__(self):
-        return "X= "+ str(self.longitud) + " Y= " + str(self.latitud) + " Categoria= " + str(self.category)
+        return "X= " + str(self.longitud) + " Y= " + str(self.latitud) + " Categoria= " + str(self.category)
 
     def get_x(self):
         return self.longitud
