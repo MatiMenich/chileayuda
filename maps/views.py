@@ -21,7 +21,7 @@ def home2(request):
 			catas = Catastrophes.objects.get(pk=int(idmap[3:]))
 			new_mark = Mark(latitud=lat, longitud=lon, description=des, category=cat, catastrophe=catas)
 			new_mark.save()
-			return HttpResponseRedirect(reverse("maps.views.home"))
+			return HttpResponseRedirect(reverse("maps.views.home2"))
 
 	serialized_obj = encodeJson(Mark.get_marks_groupBy_catastrophe(Mark))
 	categories2 = Category.get_categories_by_cat(Category)
@@ -36,7 +36,7 @@ def home2(request):
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
 	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
 
-
+"""
 
 def home(request):
 	markform = MarkForm(request.POST or None, prefix="marks")
@@ -60,6 +60,7 @@ def home(request):
 	aux = 0
 	# usar en el html de la misma forma, pero tratar esta variable como arreglo
 	return render_to_response("test.html", locals(), context_instance = RequestContext(request))
+"""
 
 def encodeJson(object):
 	string = '['
