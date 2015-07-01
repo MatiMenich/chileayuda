@@ -1,0 +1,39 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% block imports %}
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{% static 'css/block.css'%}" />
+    {% endblock %}
+    <title>{% block title %}My amazing site{% endblock %}</title>
+</head>
+
+<body>
+    <div id="header">
+        <h1>City Gallery</h1>
+    </div>
+
+    <div id="left-sidebar">
+        {% block left-sidebar %}
+        London<br>
+        Paris<br>
+        Tokyo<br>
+        {% endblock %}
+    </div>
+    <div id="content-body">
+        {% block content-body %}hola{% endblock %}
+    </div>
+
+    <div id="right-sidebar">
+        {% block right-sidebar %}
+        {% endblock %}
+    </div>
+
+    <div id="footer">
+        {% block footer %}
+        chau
+        {% endblock %}
+    </div>
+</body>
+</html>

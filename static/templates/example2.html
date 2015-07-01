@@ -1,7 +1,6 @@
+{% extends "example.html" %}
 {% load staticfiles %}
-<html>
-<head lang="en">
-    <meta charset="utf-8">
+{% block imports %}
 	<link rel="stylesheet" href="{% static 'js/leaflet.css'%}"  >
 	<link rel="stylesheet" href="{% static 'css/block.css'%}" />
 	<link rel="stylesheet" href="{% static 'css/default.css'%}" />
@@ -39,10 +38,8 @@
 		}
 
 	</script>
-
-    <title></title>
-</head>
-<body>
+{% endblock %}
+{% block content-body %}
 	<div class="container" style="margin-top: 30px;">
 		<input id="actual-catastrophe" value="0" type="hidden">
 
@@ -54,10 +51,9 @@
 
 					<div id="{{cat_dict|get_item:'idmap'}}"
 						 class="leaflet-container leaflet-fade-anim"
-						  style="float: left; width: 80%; height: 400px; border: 1px solid rgb(204, 204, 204); position: relative;">
+						 style="float: left; width: 80%; height: 400px; border: 1px solid rgb(204, 204, 204); position: relative;">
 					</div>
-
-					 <div style="float:left; width: 20%;">
+                    <div style="float:left; width: 20%;">
 					    <div style="width: 60% ; margin-left: auto ; margin-right: auto ;">
 
 						<h3>Categorías</h3><br>
@@ -69,8 +65,9 @@
 							{% endfor %}
 						</ul>
 
-						</div>
-					</div>
+
+					    </div>
+                    </div>
 
 				</div>
 		{% endfor %}
@@ -126,6 +123,4 @@
 			</form>
 
 	</div>
-
-</body>
-</html>
+{% endblock %}

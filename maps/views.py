@@ -7,6 +7,9 @@ from django.core.urlresolvers import reverse
 from django.template.defaulttags import register
 
 
+def example(request):
+	return render_to_response("example.html", locals(), context_instance = RequestContext(request))
+
 def home2(request):
 	markform = MarkForm(request.POST or None, prefix="marks")
 

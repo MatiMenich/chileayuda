@@ -203,9 +203,10 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe) {
 function init_map(json_str) {
 
 	var allData = jQuery.parseJSON(json_str);
-
+	console.log(allData)
 	for (var i = 0; i < allData.length; i++) {
 		var mapId = "map" + (i + 1);
+		console.log("mapid ="+mapId)
 		var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom : 18,
 		}), latlng = L.latLng(-41.77, -73.134);
