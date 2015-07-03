@@ -200,22 +200,22 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe) {
 	}
 }
 
-function init_map(json_str) {
+function init_map(json_str, cat_str) {
 
 	var allData = jQuery.parseJSON(json_str);
-	console.log(allData)
+	var catData = jQuery.parseJSON(cat_str);
+
 	for (var i = 0; i < allData.length; i++) {
 		var mapId = "map" + (i + 1);
-		console.log("mapid ="+mapId)
 		var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 			maxZoom : 18,
-		}), latlng = L.latLng(-41.77, -73.134);
+		}), latlng = L.latLng(catData[i][0].fields.latitud, catData[i][0].fields.longitud);
 		var map = L.map(mapId, {
 			center : latlng,
 			zoom : 15,
 			layers : [ tiles ]
 		});
-		var mapHandler = new MapHandler(allData[i], -41.77, -73.134, map,
+		var mapHandler = new MapHandler(allData[i], catData[i][0].fields.latitud, catData[i][0].fields.longitud, map,
 				mapId, i)
 		mapHandler.loadMap();
 	}

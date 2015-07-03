@@ -3,9 +3,9 @@
         "model": "maps.Catastrophes",
         "pk": 1,
         "fields": {
-            "name":"nooorte",
-            "latitud":0.0,
-            "longitud":0.0,
+            "name":"La Serena",
+            "latitud":-29.9,
+            "longitud":-71.25,
             "fecha":"2014-09-11"
         }
     },
@@ -13,9 +13,19 @@
         "model": "maps.Catastrophes",
         "pk": 2,
         "fields": {
-            "name":"suuuuur",
-            "latitud":0.0,
-            "longitud":0.0,
+            "name":"Calbuco",
+            "latitud":-41.77,
+            "longitud":-73.134,
+            "fecha":"2014-09-11"
+        }
+    },
+    {
+        "model": "maps.Catastrophes",
+        "pk": 3,
+        "fields": {
+            "name":"Santiago",
+            "latitud":-33.45,
+            "longitud":-70.666,
             "fecha":"2014-09-11"
         }
     },

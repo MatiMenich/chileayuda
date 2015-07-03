@@ -27,7 +27,7 @@ def home2(request):
 
 	serialized_obj = encodeJson(Mark.get_marks_groupBy_catastrophe(Mark))
 	categories2 = Category.get_categories_by_cat(Category)
-
+	serialized_cat = encodeJson2(Catastrophes.get_catastrofes(Catastrophes))
 	instance_dict = []
 	i = 1
 	for cat in Catastrophes.objects.all():
@@ -35,7 +35,7 @@ def home2(request):
 		instance_dict.append(d)
 		i += 1
 	categories = encodeJson2(categories2)
-	# usar en el html de la misma forma, pero tratar esta variable como arreglo
+
 	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
 
 

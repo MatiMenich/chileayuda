@@ -15,7 +15,7 @@
 
 	<script type="text/javascript">
 		$(function() {
-				init_map("{{serialized_obj}}".replace(/&quot;/g, "\""));
+				init_map("{{serialized_obj}}".replace(/&quot;/g, "\"") , "{{serialized_cat}}".replace(/&quot;/g, "\""));
 			}
 		);
 		function update_select_form(){
@@ -47,8 +47,8 @@
 		<input id="actual-catastrophe" value="0" type="hidden">
 
 		{% for cat_dict in instance_dict %}
-				
-				<h1>{{cat_dict|get_item:'place'}}</h1>
+			<div style="border: 1px solid rgb(204, 204, 0)">
+				<div class="row" style="border: 1px solid rgb(204, 0, 204)"><h1>{{cat_dict|get_item:'place'}}</h1></div>
 
 				<div class="row" style="border: 1px solid rgb(204, 0, 0)">
 
@@ -73,6 +73,16 @@
 					</div>
 
 				</div>
+			<div class="row">
+				<div style="float: left; width: 50%;">
+					<button style="width: 100%; height: 100px;">Busco persona</button>
+				</div>
+				<div style="float: left; width: 50%;">
+					<button style="width: 100%; height: 100px;">Busco persona</button>
+				</div>
+			</div>
+			</div>
+		<br>
 		{% endfor %}
 
 

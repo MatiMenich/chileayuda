@@ -6,7 +6,14 @@ class Catastrophes(models.Model):
     longitud = models.FloatField()
     fecha = models.DateField()
     def __str__(self):
-        return self.name
+        return self.name+" "+str(self.latitud)+" "+str(self.longitud)
+    def get_catastrofes(self):
+        catastrofes = []
+        c = Catastrophes.objects.all()
+        for i in range(len(c)):
+            catastrofes.append(Catastrophes.objects.filter(pk=i+1))
+        return catastrofes
+
 
 class Category(models.Model):
     category = models.CharField(max_length=50)
