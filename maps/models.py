@@ -14,14 +14,16 @@ class Catastrophes(models.Model):
             catastrofes.append(Catastrophes.objects.filter(pk=i+1))
         return catastrofes
 
+class Style(models.Model):
+    name = models.CharField(max_length=10)
 
 class Category(models.Model):
     category = models.CharField(max_length=50)
-    style = models.CharField(max_length=50, default="")
+    style = models.ForeignKey('Style')
     catastrophe = models.ForeignKey('Catastrophes')
 
     def __str__(self):
-        return self.category
+        return self.style.name
 
     def get_syle(self):
         return self.style

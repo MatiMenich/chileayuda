@@ -12,3 +12,15 @@ class MarkForm(forms.Form):
         super(MarkForm, self).__init__(*args, **kwargs)
         self.fields['category'].queryset = Category.objects.all()
         """
+
+class WizardForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput, max_length=100)
+    latitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'latitud','type': 'hidden'}))
+    longitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'longitud','type': 'hidden'}))
+    description = forms.CharField(widget=forms.TextInput, max_length=100)
+
+class CategoryForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput, max_length=100)
+
+
+

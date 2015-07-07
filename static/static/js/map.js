@@ -93,7 +93,7 @@ var greenIcon = L.icon({
 
 var iconos = [ yellowIcon, greenIcon, redIcon, orangeIcon, purpleIcon ];
 
-function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe) {
+function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styles) {
 	this.marcadores = marcadores;
 	this.latitud = latitud;
 	this.longitud = longitud;
@@ -101,14 +101,16 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe) {
 	this.mapId = mapId;
 	this.catastrophe = catastrophe;
 	this.markers = L.markerClusterGroup();
+	this.styles = styles;
 	this.loadAll = function(placeHolder, marcadores) {
 		placeHolder.markers.clearLayers();
 		for (var i = 0; i < placeHolder.marcadores.length; i++) {
+			console.log(placeHolder.styles[i].fields.style);
 			for (var j = 0; j < placeHolder.marcadores[i].length; j++) {
 				var markerAux = L.marker([
 						placeHolder.marcadores[i][j].fields.latitud,
 						placeHolder.marcadores[i][j].fields.longitud ], {
-					icon : iconos[i]
+					icon : iconos[placeHolder.styles[i].fields.style.substring(3)-1]
 				});
 				markerAux
 						.bindPopup(placeHolder.marcadores[i][j].fields.description);
@@ -131,19 +133,6 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe) {
 	this.loadMap = function() {
 
 		var placeHolder = this;
-
-		// form
-		$("#dialog").css('box-shadow', '0px 0px 2px 3px #000').css('height',
-				$(".content-dialog").height()).css('z-index', 1001).hide();
-
-		$("#cerrar").click(function() {
-
-			$("#dialog").fadeOut(400, function() {
-				$(window).css('display', 'none');
-				$('#screen').css('display', 'none');
-			});
-
-		});
 
 		this.loadAll(placeHolder, this.marcadores);
 		this.map.addLayer(this.markers);
@@ -200,10 +189,26 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe) {
 	}
 }
 
-function init_map(json_str, cat_str) {
-
+function init_map(json_str, cat_str, styles_str) {
+	console.log(json_str);
 	var allData = jQuery.parseJSON(json_str);
 	var catData = jQuery.parseJSON(cat_str);
+	var styleData = jQuery.parseJSON(styles_str);
+	console.log(allData);
+	console.log(catData);
+	console.log(styleData);
+	// form
+		$("#dialog").css('box-shadow', '0px 0px 2px 3px #000').css('height',
+				$(".content-dialog").height()).css('z-index', 1001).hide();
+
+		$("#cerrar").click(function() {
+
+			$("#dialog").fadeOut(400, function() {
+				$(window).css('display', 'none');
+				$('#screen').css('display', 'none');
+			});
+
+		});
 
 	for (var i = 0; i < allData.length; i++) {
 		var mapId = "map" + (i + 1);
@@ -216,7 +221,7 @@ function init_map(json_str, cat_str) {
 			layers : [ tiles ]
 		});
 		var mapHandler = new MapHandler(allData[i], catData[i][0].fields.latitud, catData[i][0].fields.longitud, map,
-				mapId, i)
+				mapId, i, styleData[i])
 		mapHandler.loadMap();
 	}
 }

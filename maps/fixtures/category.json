@@ -30,11 +30,51 @@
         }
     },
     {
+        "model":"maps.Style",
+        "pk":1,
+        "fields":{
+            "name":"cat1"
+        }
+
+    },
+    {
+        "model":"maps.Style",
+        "pk":2,
+        "fields":{
+            "name":"cat2"
+        }
+
+    },
+    {
+        "model":"maps.Style",
+        "pk":3,
+        "fields":{
+            "name":"cat3"
+        }
+
+    },
+    {
+        "model":"maps.Style",
+        "pk":4,
+        "fields":{
+            "name":"cat4"
+        }
+
+    },
+    {
+        "model":"maps.Style",
+        "pk":5,
+        "fields":{
+            "name":"cat5"
+        }
+
+    },
+    {
         "model": "maps.Category",
         "pk": 1,
         "fields": {
             "category": "Categoria1",
-            "style": "cat1",
+            "style": 1,
             "catastrophe": 1
 
         }
@@ -44,7 +84,7 @@
         "pk": 2,
         "fields": {
             "category": "Categoria2",
-            "style": "cat2",
+            "style": 2,
             "catastrophe": 1
         }
     },
@@ -53,7 +93,7 @@
         "pk": 3,
         "fields": {
             "category": "Categoria3",
-            "style": "cat3",
+            "style": 3,
             "catastrophe": 1
         }
     },
@@ -62,7 +102,7 @@
         "pk": 4,
         "fields": {
             "category": "Categoria4",
-            "style": "cat4",
+            "style": 4,
             "catastrophe": 1
         }
     },
@@ -71,7 +111,7 @@
         "pk": 5,
         "fields": {
             "category": "Categoria5",
-            "style": "cat5",
+            "style": 5,
             "catastrophe": 1
         }
     },
@@ -80,7 +120,7 @@
         "pk": 6,
         "fields": {
             "category": "Categoria1",
-            "style": "cat1",
+            "style": 1,
             "catastrophe": 2
 
         }
@@ -90,7 +130,7 @@
         "pk": 7,
         "fields": {
             "category": "Categoria2",
-            "style": "cat2",
+            "style": 2,
             "catastrophe": 2
         }
     },
@@ -99,8 +139,17 @@
         "pk": 8,
         "fields": {
             "category": "Categoria3",
-            "style": "cat3",
+            "style": 3,
             "catastrophe": 2
+        }
+    },
+	{
+        "model": "maps.Category",
+        "pk": 9,
+        "fields": {
+            "category": "Joseyto",
+            "style": 3,
+            "catastrophe": 3
         }
     },
     {

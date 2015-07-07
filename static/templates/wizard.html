@@ -1,0 +1,49 @@
+{% load staticfiles %}
+<html>
+<head lang="en">
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="{% static 'js/leaflet.css'%}">
+    <link rel="stylesheet" href="{% static 'css/block.css'%}"/>
+    <link rel="stylesheet" href="{% static 'css/default.css'%}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap/css/bootstrap.min.css'%}"/>
+    <script src="{% static 'js/leaflet.js'%}"></script>
+    <link rel="stylesheet" href="{% static 'js/MarkerCluster.css'%}"/>
+    <link rel="stylesheet" href="{% static 'js/MarkerCluster.Default.css'%}"/>
+    <script src="{% static 'js/leaflet.markercluster.js' %}"></script>
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/map.js' %}"></script>
+    <script>
+        $(function () {
+            var mapId = "idmap";
+            var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+                maxZoom: 18
+            }), latlng = L.latLng(-33.45, -70.666);
+            var map = L.map(mapId, {
+                center: latlng,
+                zoom: 15,
+                layers: [tiles]
+            });
+
+
+            map.on('mouseup', function (e) {
+                $("#latitud").val(e.latlng.lat);
+                $("#longitud").val(e.latlng.lng);
+            });
+        });
+
+    </script>
+    <title></title>
+</head>
+<body>
+<h1>Configuración</h1>
+
+<div id="idmap"
+     class="leaflet-container leaflet-fade-anim"
+     style="float: left; width: 50%; height: 400px; min-width: 200px; min-height: 200px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
+</div>
+
+<input id="latitud">
+<input id="longitud">
+
+</body>
+</html>
