@@ -35,6 +35,7 @@ def home2(request):
 		instance_dict.append(d)
 		i += 1
 	categories = encodeJson2(categories2)
+	print(categories)
 
 	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
 
@@ -70,15 +71,13 @@ def encodeJson(object):
 			string2 += serializers.serialize('json', var) + ","
 		string2 = string2[:len(string2) - 1] + "]"
 		string += string2 + ","
-
-	print(string)
 	return string[:len(string) - 1] + "]"
 
 
 def encodeJson2(object):
 	string = '['
 	for cat in object:
-		string += serializers.serialize('json', cat) + ","
+		string += serializers.serialize('json', cat, use_natural_keys = True) + ","
 	return string[:len(string) - 1] + "]"
 
 

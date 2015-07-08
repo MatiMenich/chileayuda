@@ -1,10 +1,20 @@
 from django.db import models
 
+class CatastrophesManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
+
 class Catastrophes(models.Model):
+
+    objects = CatastrophesManager()
+
     name = models.CharField(max_length=50)
     latitud = models.FloatField()
     longitud = models.FloatField()
     fecha = models.DateField()
+
+    def natural_key(self):
+        return (self.name, self.latitud, self.longitud, self.fecha,)
     def __str__(self):
         return self.name+" "+str(self.latitud)+" "+str(self.longitud)
     def get_catastrofes(self):
@@ -14,8 +24,21 @@ class Catastrophes(models.Model):
             catastrofes.append(Catastrophes.objects.filter(pk=i+1))
         return catastrofes
 
+class StyleManager(models.Manager):
+    def get_by_natural_key(self, name):
+        return self.get(name=name)
+
 class Style(models.Model):
+    objects = StyleManager()
     name = models.CharField(max_length=10)
+    def natural_key(self):
+        return self.name
+
+class CategoryManager(models.Manager):
+    def get_by_natural_key(self, category, style_key, catastrophe_key):
+        style = Style.objects.get_by_natural_key(style_key)
+        catastrophe = Catastrophes.objects.get_by_natural_key(catastrophe_key)
+        return self.get(category=category, style=style, catastrophe=catastrophe)
 
 class Category(models.Model):
     category = models.CharField(max_length=50)
@@ -25,8 +48,9 @@ class Category(models.Model):
     def __str__(self):
         return self.style.name
 
-    def get_syle(self):
-        return self.style
+    def natural_key(self):
+        return (self.category,) + self.style.natural_key() + self.catastrophe.natural_key()
+    natural_key.dependencies = ['maps.Style','maps.Catastrophes']
 
     def get_by_catastrophe(id_catastrophe):
         return Category.objects.filter(catastrophe=id_catastrophe)

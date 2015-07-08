@@ -105,12 +105,11 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 	this.loadAll = function(placeHolder, marcadores) {
 		placeHolder.markers.clearLayers();
 		for (var i = 0; i < placeHolder.marcadores.length; i++) {
-			console.log(placeHolder.styles[i].fields.style);
 			for (var j = 0; j < placeHolder.marcadores[i].length; j++) {
 				var markerAux = L.marker([
 						placeHolder.marcadores[i][j].fields.latitud,
 						placeHolder.marcadores[i][j].fields.longitud ], {
-					icon : iconos[placeHolder.styles[i].fields.style.substring(3)-1]
+					icon : iconos[parseInt(placeHolder.styles[i].fields.style.substring(3))-1]
 				});
 				markerAux
 						.bindPopup(placeHolder.marcadores[i][j].fields.description);
@@ -124,7 +123,7 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 			var markerAux = L.marker([
 					placeHolder.marcadores[category][j].fields.latitud,
 					placeHolder.marcadores[category][j].fields.longitud ], {
-				icon : iconos[category]
+				icon : iconos[parseInt(placeHolder.styles[i].fields.style.substring(3))-1]
 			});
 			markerAux.bindPopup(marcadores[category][j].fields.description);
 			placeHolder.markers.addLayer(markerAux);
@@ -194,9 +193,6 @@ function init_map(json_str, cat_str, styles_str) {
 	var allData = jQuery.parseJSON(json_str);
 	var catData = jQuery.parseJSON(cat_str);
 	var styleData = jQuery.parseJSON(styles_str);
-	console.log(allData);
-	console.log(catData);
-	console.log(styleData);
 	// form
 		$("#dialog").css('box-shadow', '0px 0px 2px 3px #000').css('height',
 				$(".content-dialog").height()).css('z-index', 1001).hide();

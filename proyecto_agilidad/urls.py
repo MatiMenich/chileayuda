@@ -7,7 +7,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', 'maps.views.home2', name='home2'),
+    url(r'^3$','maps.views.wizard',name = 'wizard'),
+    url(r'^', 'maps.views.home2', name='home2'),
     url(r'^2', 'maps.views.example', name='example'),
     # url(r'^blog/', include('blog.urls')),
 
