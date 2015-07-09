@@ -86,4 +86,5 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 def wizard(request):
+	wizardform = WizardForm(request.POST or None, prefix="wizard")
 	return render_to_response("wizard.html", locals(), context_instance = RequestContext(request))

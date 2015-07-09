@@ -21,13 +21,21 @@
             var map = L.map(mapId, {
                 center: latlng,
                 zoom: 15,
-                layers: [tiles]
+                layers: [tiles],
+                maxZoom:15,
+                minZoom:15
             });
 
+            var marker = L.marker([1,1]);
 
             map.on('mouseup', function (e) {
+                this.removeLayer(marker);
+                this.panTo([e.latlng.lat, e.latlng.lng]);
+                marker = L.marker([e.latlng.lat, e.latlng.lng]);
+                marker.addTo(map);
                 $("#latitud").val(e.latlng.lat);
                 $("#longitud").val(e.latlng.lng);
+                
             });
         });
 
@@ -35,15 +43,47 @@
     <title></title>
 </head>
 <body>
-<h1>Configuración</h1>
 
-<div id="idmap"
-     class="leaflet-container leaflet-fade-anim"
-     style="float: left; width: 50%; height: 400px; min-width: 200px; min-height: 200px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
+<div class="container">
+
+    <h1>Configuración</h1>
+
+    <div id="idmap"
+         class="leaflet-container leaflet-fade-anim"
+         style="float: left; width: 50%; height: 400px; min-width: 200px; min-height: 200px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
+    </div>
+
+    <div style="padding: 10px;">
+        <form method="post">{% csrf_token %}
+            <!-- Form Name -->
+            <legend>Crear Catastrofe</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label">Nombre</label>
+              <div class="col-md-4">
+              {{ wizardform.name }}
+
+              </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+              <label class="col-md-4 control-label" for="enviar"></label>
+              <div class="col-md-4">
+                <button id="enviar" name="enviar" class="btn btn-info">Enviar</button>
+              </div>
+            </div>
+            <div>
+                {{wizardform.latidud}}
+            </div>
+            <div>
+                {{wizardform.longitud}}
+            </div>
+        </form>
+    </div>
 </div>
 
-<input id="latitud">
-<input id="longitud">
 
 </body>
 </html>
