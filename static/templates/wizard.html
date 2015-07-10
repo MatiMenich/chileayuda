@@ -41,7 +41,7 @@
     </script>
     <script> 
     function changeTest(a) {
-       a.className ="form-control input-sm "+a.options[a.selectedIndex].value;
+       a.className ="form-control input-sm "+a.options[a.selectedIndex].className;
        return true;
     }
     </script>
@@ -204,8 +204,8 @@
 
                                         <!-- Select Basic -->
                                         <div class="form-group col-md-6">
-                                            <label class="col-md-3 control-label">Style</label>
-                                            <div class="col-md-3">
+                                            <label class="col-md-6 control-label">Style</label>
+                                            <div class="col-md-6">
                                                 {{ form.style }}
                                             </div>
                                         </div>

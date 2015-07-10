@@ -14,6 +14,10 @@ ul{
 	margin-bottom: 0px !important;
  	border: 0px solid transparent !important;
 }
+
+.cat-white{
+	background-color: white !important;
+}
 .cat-all{
 	background-color: black !important;
 }

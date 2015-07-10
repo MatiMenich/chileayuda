@@ -8,8 +8,13 @@ from .models import *
 
 class MySelect(forms.Select):
     def render_option(self, selected_choices, option_value, option_label):
+        res=""
         if option_value is None:
             option_value = ''
+        if option_value =="":
+            option_value = "-1"
+            res = option_label
+            option_label = "cat-white"
         option_value = force_text(option_value)
         if option_value in selected_choices:
             selected_html = mark_safe(' selected="selected"')
@@ -18,10 +23,12 @@ class MySelect(forms.Select):
                 selected_choices.remove(option_value)
         else:
             selected_html = ''
-        return format_html('<option value="{0}" class="{2}"{1}>{2}</option>',
+
+        return format_html('<option value="{0}" class="{2}"{1}>{3}</option>',
                            option_value,
                            selected_html,
-                           force_text(option_label))
+                           force_text(option_label),
+                           res)
 
 class MarkForm(forms.Form):
     description = forms.CharField(widget=forms.TextInput, max_length=100)
@@ -43,7 +50,7 @@ class WizardForm(forms.Form):
 
 class CategoryForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput, max_length=100)
-    style = forms.ModelChoiceField(queryset=Style.objects.all(), widget=MySelect(attrs={'class':'form-control input-sm','onchange':'changeTest(this)'}))
+    style = forms.ModelChoiceField(queryset=Style.objects.all(),empty_label='Seleccione un color', widget=MySelect(attrs={'class':'form-control input-sm','onchange':'changeTest(this)'}))
 CategoryFormSet = formset_factory(CategoryForm, extra=1)
 
 
