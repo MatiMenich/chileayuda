@@ -59,15 +59,17 @@
 
 					 <div style="float:left; width: 20%;">
 					    <div style="width: 60% ; margin-left: auto ; margin-right: auto ;">
+						<div class="panel panel-catbutton">
+							<div class="panel-body-catbutton">
+								<ul class="list-group list-categories">
+									<li class="list-group-item list-button-item cat-all {{forloop.counter0}}">Todas</li>
+									{% for category in cat_dict|get_item:'categories' %}
+									<li categoria="{{category.style.id}}"class="list-group-item list-button-item filtro {{category.style}} {{forloop.parentloop.counter0}}">{{category.category}}</li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
 
-						<h3>Categorías</h3><br>
-
-						<ul style="list-style: none">
-							<li><button type="button" class="btn btn-default all {{forloop.counter0}}">Todos</button></li>
-							{% for category in cat_dict|get_item:'categories' %}
-								<li><button categoria="{{forloop.counter0}}" type="button" class="btn btn-default filtro cat{{forloop.counter0}} {{forloop.parentloop.counter0}}" >{{category.category}}</button></li>
-							{% endfor %}
-						</ul>
 
 						</div>
 					</div>

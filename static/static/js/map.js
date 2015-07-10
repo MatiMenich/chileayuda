@@ -106,7 +106,7 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 				var markerAux = L.marker([
 						placeHolder.marcadores[i][j].fields.latitud,
 						placeHolder.marcadores[i][j].fields.longitud ], {
-					icon : iconos[parseInt(placeHolder.styles[i].fields.style.substring(3))-1]
+					icon : iconos[parseInt(placeHolder.styles[i].fields.style.substring(3))]
 				});
 				markerAux
 						.bindPopup(placeHolder.marcadores[i][j].fields.description);
@@ -116,11 +116,12 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 	}
 	this.loadByCategory = function(placeHolder, category) {
 		placeHolder.markers.clearLayers();
+
 		for (var j = 0; j < placeHolder.marcadores[category].length; j++) {
 			var markerAux = L.marker([
 					placeHolder.marcadores[category][j].fields.latitud,
 					placeHolder.marcadores[category][j].fields.longitud ], {
-				icon : iconos[parseInt(placeHolder.styles[i].fields.style.substring(3))-1]
+				icon : iconos[parseInt(placeHolder.styles[category].fields.style.substring(3))]
 			});
 			markerAux.bindPopup(marcadores[category][j].fields.description);
 			placeHolder.markers.addLayer(markerAux);
@@ -175,11 +176,11 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 			}
 		});
 
-		$("button.all." + catastrophe).click(function() {
+		$("li.cat-all." + catastrophe).click(function() {
 			placeHolder.loadAll(placeHolder, $(this).attr('categoria'));
 		});
 
-		$("button.filtro." + catastrophe).click(function() {
+		$("li.filtro." + catastrophe).click(function() {
 			placeHolder.loadByCategory(placeHolder, $(this).attr('categoria'));
 		});
 	}
