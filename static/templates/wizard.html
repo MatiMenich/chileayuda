@@ -20,19 +20,18 @@
             }), latlng = L.latLng(-33.45, -70.666);
             var map = L.map(mapId, {
                 center: latlng,
-                zoom: 15,
-                layers: [tiles],
-                maxZoom:15,
-                minZoom:15
+                zoom: 14,
+                layers: [tiles]
             });
 
             var marker = L.marker([1,1]);
 
-            map.on('mouseup', function (e) {
+            map.on('click', function (e) {
                 this.removeLayer(marker);
                 this.panTo([e.latlng.lat, e.latlng.lng]);
                 marker = L.marker([e.latlng.lat, e.latlng.lng]);
                 marker.addTo(map);
+                $("#zoom").val(e.target.getZoom());
                 $("#latitud").val(e.latlng.lat);
                 $("#longitud").val(e.latlng.lng);
                 
@@ -40,9 +39,10 @@
         });
 
     </script>
-    <script> function changeTest(a) {
+    <script> 
+    function changeTest(a) {
        a.className ="form-control input-sm "+a.options[a.selectedIndex].value;
-
+       return true;
     }
     </script>
     <script>
@@ -144,6 +144,7 @@
     <title></title>
 </head>
 <body>
+<div class="container">
     <h1>Configuración</h1>
     <div class="row">
         <div id="idmap"
@@ -152,15 +153,16 @@
         </div>
     </div>
 
-    <div class="row">
-        <input id="latitud">
-        <input id="longitud">
-    </div>
+    
 
 
 		<form class="form-horizontal" method="post">{% csrf_token %}
 
-
+            <div class="row">
+                {{ wizardform.zoom }}
+                {{ wizardform.latitud }}
+                {{ wizardform.longitud }}
+            </div>
             <div class="row">
 					<div class="col-sm-12">
                     	<div class="panel panel-default">
@@ -194,7 +196,7 @@
                                     <div class="col-md-12 row item">
 
                                         <div class="form-group col-md-6">
-                                            <label class="col-md-1 control-label">Nombre</label>
+                                            <label class="col-md-2 control-label">Nombre</label>
                                             <div class="col-md-3">
                                                 {{ form.name }}
                                             </div>
@@ -235,6 +237,11 @@
 	</div>
     </div>
 
-
+    {{ catName}}
+    {{ catStyle}}
+    
+    
+    
+</div>
 </body>
 </html>

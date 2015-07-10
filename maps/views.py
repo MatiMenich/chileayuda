@@ -86,6 +86,18 @@ def get_item(dictionary, key):
     return dictionary.get(key)
 
 def wizard(request):
-	catform = CategoryFormSet(request.POST or None, prefix="category")
 	wizardform = WizardForm(request.POST or None, prefix="wizard")
+	catform = CategoryFormSet(request.POST or None, prefix="category")
+	if request.method == "POST":
+		if wizardform.is_valid():
+			name = wizardform.cleaned_data['name']
+			latitud = wizardform.cleaned_data['latitud']
+			longitud = wizardform.cleaned_data['longitud']
+			zoom = wizardform.cleaned_data['zoom']
+			for form in catform:
+				print('hola')	
+				if form.is_valid():
+					catName = form.cleaned_data['name']		
+					catStyle = form.cleaned_data['style']		
+
 	return render_to_response("wizard.html", locals(), context_instance = RequestContext(request))

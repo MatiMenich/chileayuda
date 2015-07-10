@@ -1,23 +1,27 @@
 from django import forms
 from django.forms import formset_factory
 from django.utils.html import format_html
+from django.utils.encoding import force_text
+from django.utils.safestring import mark_safe
 from .models import *
 
 
 class MySelect(forms.Select):
     def render_option(self, selected_choices, option_value, option_label):
-        # look at the original for something to start with
         if option_value is None:
             option_value = ''
+        option_value = force_text(option_value)
         if option_value in selected_choices:
-            selected_html = ' selected=\"selected\"'
+            selected_html = mark_safe(' selected="selected"')
             if not self.allow_multiple_selected:
+                # Only allow for a single selection.
                 selected_choices.remove(option_value)
         else:
             selected_html = ''
-        return format_html('<option value="{0}" class="{0}"{1}></option>',
-                           option_label,
-                           selected_html)
+        return format_html('<option value="{0}" class="{2}"{1}>{2}</option>',
+                           option_value,
+                           selected_html,
+                           force_text(option_label))
 
 class MarkForm(forms.Form):
     description = forms.CharField(widget=forms.TextInput, max_length=100)
@@ -33,9 +37,9 @@ class MarkForm(forms.Form):
 
 class WizardForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput, max_length=100)
-    latitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'latitud','type': 'hidden'}))
-    longitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'longitud','type': 'hidden'}))
-    description = forms.CharField(widget=forms.TextInput, max_length=100)
+    zoom = forms.FloatField(widget=forms.TextInput(attrs={'id': 'zoom','type': 'hidden', 'value': 14}))
+    latitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'latitud','type': 'hidden', 'value' : -33.45}))
+    longitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'longitud','type': 'hidden', 'value' : -70.666}))
 
 class CategoryForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput, max_length=100)
