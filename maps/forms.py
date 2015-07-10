@@ -1,12 +1,23 @@
 from django import forms
 from django.forms import formset_factory
+from django.utils.html import format_html
 from .models import *
 
 
 class MySelect(forms.Select):
     def render_option(self, selected_choices, option_value, option_label):
         # look at the original for something to start with
-        return u'<option class=\"'+str(option_label)+'\"> </option>'
+        if option_value is None:
+            option_value = ''
+        if option_value in selected_choices:
+            selected_html = ' selected=\"selected\"'
+            if not self.allow_multiple_selected:
+                selected_choices.remove(option_value)
+        else:
+            selected_html = ''
+        return format_html('<option value="{0}" class="{0}"{1}></option>',
+                           option_label,
+                           selected_html)
 
 class MarkForm(forms.Form):
     description = forms.CharField(widget=forms.TextInput, max_length=100)
@@ -28,7 +39,7 @@ class WizardForm(forms.Form):
 
 class CategoryForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput, max_length=100)
-    style = forms.ModelChoiceField(queryset=Style.objects.all(), empty_label="Seleccione un color", widget=MySelect(attrs={'class':'form-control input-sm'}))
+    style = forms.ModelChoiceField(queryset=Style.objects.all(), widget=MySelect(attrs={'class':'form-control input-sm','onchange':'changeTest(this)'}))
 CategoryFormSet = formset_factory(CategoryForm, extra=1)
 
 

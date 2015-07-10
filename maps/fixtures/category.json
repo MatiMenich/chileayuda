@@ -33,7 +33,7 @@
         "model":"maps.Style",
         "pk":1,
         "fields":{
-            "name":"cat1"
+            "name":"cat0"
         }
 
     },
@@ -41,7 +41,7 @@
         "model":"maps.Style",
         "pk":2,
         "fields":{
-            "name":"cat2"
+            "name":"cat1"
         }
 
     },
@@ -49,7 +49,7 @@
         "model":"maps.Style",
         "pk":3,
         "fields":{
-            "name":"cat3"
+            "name":"cat2"
         }
 
     },
@@ -57,7 +57,7 @@
         "model":"maps.Style",
         "pk":4,
         "fields":{
-            "name":"cat4"
+            "name":"cat3"
         }
 
     },
@@ -65,7 +65,7 @@
         "model":"maps.Style",
         "pk":5,
         "fields":{
-            "name":"cat5"
+            "name":"cat4"
         }
 
     },

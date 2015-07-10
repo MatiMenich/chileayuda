@@ -40,6 +40,11 @@
         });
 
     </script>
+    <script> function changeTest(a) {
+       a.className ="form-control input-sm "+a.options[a.selectedIndex].value;
+
+    }
+    </script>
     <script>
         $(document).ready(function () {
         $(".active").removeClass("active");
@@ -87,6 +92,7 @@
                 // Clone a form (without event handlers) from the first form
                 var row = $(".item:first").clone(true);
                 // Insert it after the last form
+                $(row).children().children().children()[1].className = "form-control input-sm ";
                 $(row).removeAttr('id').hide().insertAfter(".item:last").slideDown(300);
 
                 // Remove the bits we don't want in the new row/form
@@ -139,63 +145,81 @@
 </head>
 <body>
     <h1>Configuración</h1>
-
-    <div id="idmap"
-         class="leaflet-container leaflet-fade-anim"
-         style="float: left; width: 50%; height: 400px; min-width: 200px; min-height: 200px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
+    <div class="row">
+        <div id="idmap"
+             class="leaflet-container leaflet-fade-anim"
+             style="float: left; width: 50%; height: 400px; min-width: 200px; min-height: 200px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
+        </div>
     </div>
 
-    <input id="latitud">
-    <input id="longitud">
+    <div class="row">
+        <input id="latitud">
+        <input id="longitud">
+    </div>
 
-    <div class="col-md-12">
+
 		<form class="form-horizontal" method="post">{% csrf_token %}
-			<fieldset>
-            <!-- Text input-->
-            <div class="form-group">
-              <label class="col-md-4 control-label">Nombre</label>
-              <div class="col-md-4">
-              {{ wizardform.name }}
 
-              </div>
+
+            <div class="row">
+					<div class="col-sm-12">
+                    	<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span>Hola</span>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">Nombre</label>
+                                    <div class="col-md-4">
+                                        {{ wizardform.name }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
             </div>
+            <br>
 
-            
-            <div>
-                {{wizardform.latidud}}
-            </div>
-            <div>
-                {{wizardform.longitud}}
-            </div>
-			<!-- Form Name -->
-			<legend>Category Name</legend>
-            {{ catform.management_form }}
-            {% for form in catform %}
-                {{ form.id }}
-                <!-- Text input-->
-                <div class="item">
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Nombre</label>
-                  <div class="col-md-4">
-                  {{ form.name }}
+            <div class="row">
+					<div class="col-sm-12">
+                    	<div class="panel panel-default">
+                            <div class="panel-heading">
+                                <span>Hola</span>
+                            </div>
+                            <div class="panel-body">
+                                {{ catform.management_form }}
+                                {% for form in catform %}
+                                    {{ form.id }}
+                                    <!-- Text input-->
+                                    <div class="col-md-12 row item">
 
-                  </div>
-                </div>
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-1 control-label">Nombre</label>
+                                            <div class="col-md-3">
+                                                {{ form.name }}
+                                            </div>
+                                        </div>
 
-                <!-- Select Basic -->
-                <div class="form-group">
-                  <label class="col-md-4 control-label">Style</label>
-                  <div class="col-md-6">
-                    {{ form.style }}
-                  </div>
-                </div>
-                </div>
+                                        <!-- Select Basic -->
+                                        <div class="form-group col-md-6">
+                                            <label class="col-md-3 control-label">Style</label>
+                                            <div class="col-md-3">
+                                                {{ form.style }}
+                                            </div>
+                                        </div>
 
-            {% endfor %}
-                <div class="row">
-                    <div id="add_category" class="col-sm-12">
-                        <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-                        <label class="control-label">Agregar Categoría</label>
+                                    </div>
+                                {% endfor %}
+
+                                <div class="row">
+                                    <div class="col-sm-6"></div>
+                                    <div id="add_category" class="col-sm-6">
+                                        <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                                        <label class="control-label">Agregar Categoría</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 			<!-- Button -->
@@ -206,11 +230,10 @@
 				<button id="cerrar" name="cerrar" type="button" class="btn btn-info" onclick="">cerrar</button>
 			  </div>
 			</div>
-
-			</fieldset>
         </form>
 
 	</div>
+    </div>
 
 
 </body>
