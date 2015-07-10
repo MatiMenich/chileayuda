@@ -31,6 +31,8 @@ class StyleManager(models.Manager):
 class Style(models.Model):
     objects = StyleManager()
     name = models.CharField(max_length=10)
+    def __str__(self):
+        return self.name
     def natural_key(self):
         return self.name
 

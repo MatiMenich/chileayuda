@@ -1,10 +1,11 @@
 // centrar
 jQuery.fn.center = function() {
+	console.log($(window).height());
+	console.log($(this).outerHeight());
+	console.log($(window).scrollTop());
+	console.log($(window).innerHeight());
 	this.css("position", "absolute");
-	this.css("top", Math.max(0,
-			(($(window).height() - $(this).outerHeight()) / 3)
-					+ $(window).scrollTop())
-			+ "px");
+	this.css("top",	(window.innerHeight/3	+ $(window).scrollTop()) + "px");
 	this.css("left", Math.max(0,
 			(($(window).width() - $(this).outerWidth()) / 2)
 					+ $(window).scrollLeft())
@@ -202,6 +203,10 @@ function init_map(json_str, cat_str, styles_str) {
 			$("#dialog").fadeOut(400, function() {
 				$(window).css('display', 'none');
 				$('#screen').css('display', 'none');
+			});
+
+			$('body').css({
+				'overflow' : 'visible'
 			});
 
 		});

@@ -1,5 +1,12 @@
 from django import forms
+from django.forms import formset_factory
 from .models import *
+
+
+class MySelect(forms.Select):
+    def render_option(self, selected_choices, option_value, option_label):
+        # look at the original for something to start with
+        return u'<option class=\"'+str(option_label)+'\"> </option>'
 
 class MarkForm(forms.Form):
     description = forms.CharField(widget=forms.TextInput, max_length=100)
@@ -21,6 +28,7 @@ class WizardForm(forms.Form):
 
 class CategoryForm(forms.Form):
     name = forms.CharField(widget=forms.TextInput, max_length=100)
-
+    style = forms.ModelChoiceField(queryset=Style.objects.all(), empty_label="Seleccione un color", widget=MySelect(attrs={'class':'form-control input-sm'}))
+CategoryFormSet = formset_factory(CategoryForm, extra=1)
 
 

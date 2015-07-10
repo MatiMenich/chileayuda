@@ -8,19 +8,21 @@ ul{
 	margin-right: -10px;
 }
 
-.btn.cat0{
-
-	background-color: #f8f402;
+.cat0{
+	background-color: #f8f402 !important;
 }
-.btn.cat1{
-	background-color: #02a43b;
+.cat1{
+	background-color: #02a43b !important;
 }
-.btn.cat2{
-	background-color: #de172d;
+.cat2{
+	background-color: #de172d !important;
 }
-.btn.cat3{
-	background-color: #eca122;
+.cat3{
+	background-color: #eca122 !important;
 }
-.btn.cat4{
-	background-color: #a84f94;
+.cat4{
+	background-color: #a84f94 !important;
+}
+.cat5{
+	background-color: #f84f94 !important;
 }
