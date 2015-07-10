@@ -5,9 +5,18 @@ li{
 ul{
 	margin: 0;
 	padding: 0;
-	margin-right: -10px;
 }
 
+.list-categories { text-align: center; max-height:200px; min-height: 200px; overflow:auto;}
+.panel-body-catbutton { padding:0px; }
+.list-button-item {color:white; }
+.panel-catbutton{
+	margin-bottom: 0px !important;
+ 	border: 0px solid transparent !important;
+}
+.cat-all{
+	background-color: black !important;
+}
 .cat0{
 	background-color: #f8f402 !important;
 }

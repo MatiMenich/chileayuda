@@ -35,7 +35,6 @@ def home2(request):
 		instance_dict.append(d)
 		i += 1
 	categories = encodeJson2(categories2)
-	print(categories)
 
 	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
 
