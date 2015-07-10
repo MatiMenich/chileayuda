@@ -21,13 +21,21 @@
             var map = L.map(mapId, {
                 center: latlng,
                 zoom: 15,
-                layers: [tiles]
+                layers: [tiles],
+                maxZoom:15,
+                minZoom:15
             });
 
+            var marker = L.marker([1,1]);
 
             map.on('mouseup', function (e) {
+                this.removeLayer(marker);
+                this.panTo([e.latlng.lat, e.latlng.lng]);
+                marker = L.marker([e.latlng.lat, e.latlng.lng]);
+                marker.addTo(map);
                 $("#latitud").val(e.latlng.lat);
                 $("#longitud").val(e.latlng.lng);
+                
             });
         });
 
@@ -143,7 +151,22 @@
     <div class="col-md-12">
 		<form class="form-horizontal" method="post">{% csrf_token %}
 			<fieldset>
+            <!-- Text input-->
+            <div class="form-group">
+              <label class="col-md-4 control-label">Nombre</label>
+              <div class="col-md-4">
+              {{ wizardform.name }}
 
+              </div>
+            </div>
+
+            
+            <div>
+                {{wizardform.latidud}}
+            </div>
+            <div>
+                {{wizardform.longitud}}
+            </div>
 			<!-- Form Name -->
 			<legend>Category Name</legend>
             {{ catform.management_form }}

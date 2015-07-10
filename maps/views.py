@@ -35,7 +35,7 @@ def home2(request):
 		instance_dict.append(d)
 		i += 1
 	categories = encodeJson2(categories2)
-
+	print(categories)
 
 	return render_to_response("index.html", locals(), context_instance = RequestContext(request))
 
@@ -87,4 +87,5 @@ def get_item(dictionary, key):
 
 def wizard(request):
 	catform = CategoryFormSet(request.POST or None, prefix="category")
+	wizardform = WizardForm(request.POST or None, prefix="wizard")
 	return render_to_response("wizard.html", locals(), context_instance = RequestContext(request))

@@ -1,9 +1,5 @@
 // centrar
 jQuery.fn.center = function() {
-	console.log($(window).height());
-	console.log($(this).outerHeight());
-	console.log($(window).scrollTop());
-	console.log($(window).innerHeight());
 	this.css("position", "absolute");
 	this.css("top",	(window.innerHeight/3	+ $(window).scrollTop()) + "px");
 	this.css("left", Math.max(0,
@@ -195,21 +191,20 @@ function init_map(json_str, cat_str, styles_str) {
 	var catData = jQuery.parseJSON(cat_str);
 	var styleData = jQuery.parseJSON(styles_str);
 	// form
-		$("#dialog").css('box-shadow', '0px 0px 2px 3px #000').css('height',
-				$(".content-dialog").height()).css('z-index', 1001).hide();
+	$("#dialog").css('box-shadow', '0px 0px 2px 3px #000').css('height',
+			$(".content-dialog").height()).css('z-index', 1001).hide();
 
-		$("#cerrar").click(function() {
+	$("#cerrar").click(function() {
 
-			$("#dialog").fadeOut(400, function() {
-				$(window).css('display', 'none');
-				$('#screen').css('display', 'none');
-			});
-
+		$("#dialog").fadeOut(400, function() {
+			$(window).css('display', 'none');
+			$('#screen').css('display', 'none');
 			$('body').css({
 				'overflow' : 'visible'
 			});
-
 		});
+
+	});
 
 	for (var i = 0; i < allData.length; i++) {
 		var mapId = "map" + (i + 1);
