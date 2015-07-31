@@ -84,6 +84,10 @@ def encodeJson2(object):
 def get_item(dictionary, key):
     return dictionary.get(key)
 
+
+def panel(request):
+	return render_to_response("panel.html", locals(), context_instance = RequestContext(request))
+
 def wizard(request):
 	wizardform = WizardForm(request.POST or None, prefix="wizard")
 	catform = CategoryFormSet(request.POST or None, prefix="category")
@@ -100,3 +104,6 @@ def wizard(request):
 					catStyle = form.cleaned_data['style']		
 
 	return render_to_response("wizard.html", locals(), context_instance = RequestContext(request))
+
+def wizard2(request):
+	return render_to_response("wizard2.html", locals(), context_instance = RequestContext(request))
