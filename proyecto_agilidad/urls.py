@@ -9,8 +9,10 @@ urlpatterns = patterns('',
     # Examples:
     url(r'^wizard','maps.views.wizard',name = 'wizard'),
     url(r'^panel','maps.views.panel',name = 'panel'),
-    url(r'^$', 'maps.views.home2', name='home2'),
+    url(r'^mapa', 'maps.views.mapa', name='mapa'),
     url(r'^2', 'maps.views.example', name='example'),
+    url(r'^home', 'maps.views.home', name='home'),
+    url(r'^$', 'maps.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),

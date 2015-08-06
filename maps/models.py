@@ -9,12 +9,13 @@ class Catastrophes(models.Model):
     objects = CatastrophesManager()
 
     name = models.CharField(max_length=50)
+    description = models.CharField(max_length=140)
     latitud = models.FloatField()
     longitud = models.FloatField()
     fecha = models.DateField()
 
     def natural_key(self):
-        return (self.name, self.latitud, self.longitud, self.fecha,)
+        return (self.name, self.latitud, self.longitud, self.fecha, self.description)
     def __str__(self):
         return self.name+" "+str(self.latitud)+" "+str(self.longitud)
     def get_catastrofes(self):

@@ -6,7 +6,8 @@
             "name":"La Serena",
             "latitud":-29.9,
             "longitud":-71.25,
-            "fecha":"2014-09-11"
+            "fecha":"2014-09-11",
+            "description":"Catastrofe en la Serena. Tornado brígido"
         }
     },
     {
@@ -16,7 +17,8 @@
             "name":"Calbuco",
             "latitud":-41.77,
             "longitud":-73.134,
-            "fecha":"2014-09-11"
+            "fecha":"2014-09-11",
+            "description":"Volcan explota"
         }
     },
     {
@@ -26,7 +28,8 @@
             "name":"Santiago",
             "latitud":-33.45,
             "longitud":-70.666,
-            "fecha":"2014-09-11"
+            "fecha":"2014-09-11",
+            "description" : "Esta es una descripción de prueba. La idea es ocupar las 140 letras disponibles, y así generar un diseño con la descripción mas larga posibl"
         }
     },
     {
