@@ -42,15 +42,15 @@ class MarkForm(forms.Form):
         self.fields['category'].queryset = Category.objects.all()
         """
 
+
 class WizardForm(forms.Form):
-    name = forms.CharField(widget=forms.TextInput, max_length=100)
+    name = forms.CharField(widget=forms.TextInput(attrs={'id': 'nombrecat','class':'form-control'}))
+    date = forms.DateField(widget=forms.DateInput(format='%m/%d/%Y',attrs={'id': 'datecat','class':'form-control'}), input_formats=('%m/%d/%Y',))
     zoom = forms.FloatField(widget=forms.TextInput(attrs={'id': 'zoom','type': 'hidden', 'value': 14}))
-    latitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'latitud','type': 'hidden', 'value' : -33.45}))
-    longitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'longitud','type': 'hidden', 'value' : -70.666}))
+    latitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'latitud','class':'form-control', 'value' : -33.45}))
+    longitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'longitud','class':'form-control', 'value' : -70.666}))
 
 class CategoryForm(forms.Form):
-    name = forms.CharField(widget=forms.TextInput, max_length=100)
+    name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
     style = forms.ModelChoiceField(queryset=Style.objects.all(),empty_label='Seleccione un color', widget=MySelect(attrs={'class':'form-control input-sm','onchange':'changeTest(this)'}))
 CategoryFormSet = formset_factory(CategoryForm, extra=1)
-
-
