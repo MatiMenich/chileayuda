@@ -23,6 +23,7 @@
                 }
             }
             console.log(edit);
+            document.getElementById("nombrecat").value = edit.fields.name;
             //console.log(catastrophes[pk=cat.value]);
         }
     </script>
@@ -166,7 +167,7 @@
 
 
 
-		<form class="form-horizontal" method="post">
+		<form name="edit-form" class="form-horizontal" method="post">
       {% csrf_token %}
       <div class="row">
         {{ wizardform.zoom }}
