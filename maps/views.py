@@ -10,8 +10,18 @@ from django.template.defaulttags import register
 def example(request):
 	return render_to_response("example.html", locals(), context_instance = RequestContext(request))
 
+
 def mapa(request):
-	markform = MarkForm(request.POST or None, prefix="marks")
+	idCatastrophe = request.GET["idCat"]
+	marks = Mark.get_marks_groupBy_category(idCatastrophe)
+	categories = Category.get_by_catastrophe(idCatastrophe)
+	catastrophe = Catastrophes.find_by_id(idCatastrophe)
+
+	serializedCategories = serializers.serialize('json', categories)
+	serializedMarks = encodeArrayOfArray(marks)
+	serializedCatastrophe = serializers.serialize('json', [catastrophe])[1:-1]
+
+	markform = MarkForm(idCatastrophe,request.POST or None, prefix="marks")
 
 	if request.method == "POST":
 		if markform.is_valid():
@@ -20,21 +30,11 @@ def mapa(request):
 			lat = markform.cleaned_data['latitud']
 			lon = markform.cleaned_data['longitud']
 			idmap = markform.cleaned_data['idmap']
-			catas = Catastrophes.objects.get(pk=int(idmap[3:]))
+			catas = Catastrophes.objects.get(pk=markform.cleaned_data['catastrophe'])
+
 			new_mark = Mark(latitud=lat, longitud=lon, description=des, category=cat, catastrophe=catas)
 			new_mark.save()
-			return HttpResponseRedirect(reverse("maps.views.home2"))
-
-	serialized_obj = encodeJson(Mark.get_marks_groupBy_catastrophe(Mark))
-	categories2 = Category.get_categories_by_cat(Category)
-	serialized_cat = encodeJson2(Catastrophes.get_catastrofes(Catastrophes))
-	instance_dict = []
-	i = 1
-	for cat in Catastrophes.objects.all():
-		d = {'place': cat.name, 'idcat':cat.pk, 'idmap': str("map" + str(i)), 'categories': categories2[i - 1]}
-		instance_dict.append(d)
-		i += 1
-	categories = encodeJson2(categories2)
+			return HttpResponseRedirect("mapa?idCat="+idCatastrophe)
 
 	return render_to_response("mapa.html", locals(), context_instance = RequestContext(request))
 
@@ -54,10 +54,16 @@ def encodeJson(object):
 	return string[:len(string) - 1] + "]"
 
 
-def encodeJson2(object):
+def encodeArrayOfArray(arrayOfArray):
 	string = '['
-	for cat in object:
-		string += serializers.serialize('json', [cat], use_natural_keys = True) + ","
+	for array in arrayOfArray:
+		string += serializers.serialize('json', array) + ","
+	return string[:len(string) - 1] + "]"
+
+def encodeJson2(arrayOfArray):
+	string = '['
+	for array in arrayOfArray:
+		string += serializers.serialize('json', array, use_natural_keys=True) + ","
 	return string[:len(string) - 1] + "]"
 
 

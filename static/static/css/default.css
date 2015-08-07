@@ -7,9 +7,9 @@ ul{
 	padding: 0;
 }
 
-.list-categories { text-align: center; max-height:200px; min-height: 200px; overflow:auto;}
+.list-categories { text-align: center; max-height:600px; overflow:auto;}
 .panel-body-catbutton { padding:0px; }
-.list-button-item {color:white; }
+.list-button-item {color:white; cursor: pointer;}
 .panel-catbutton{
 	margin-bottom: 0px !important;
  	border: 0px solid transparent !important;

@@ -37,11 +37,11 @@ class MarkForm(forms.Form):
     latitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'latitud','type': 'hidden'}))
     longitud = forms.FloatField(widget=forms.TextInput(attrs={'id': 'longitud','type': 'hidden'}))
     idmap = forms.CharField(widget=forms.TextInput(attrs={'id': 'id-map', 'type': 'hidden'}))
-"""
-    def __init__(self, map, *args, **kwargs):
+    catastrophe = forms.CharField(widget=forms.TextInput(attrs={'id': 'id-map', 'type': 'hidden'}))
+    def __init__(self, catastrophe, *args, **kwargs):
         super(MarkForm, self).__init__(*args, **kwargs)
-        self.fields['category'].queryset = Category.objects.all()
-        """
+        self.fields['category'].queryset = Category.objects.filter(catastrophe=catastrophe)
+        self.fields['catastrophe'].widget.attrs["value"]=catastrophe
 
 
 class WizardForm(forms.Form):
