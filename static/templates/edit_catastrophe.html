@@ -13,6 +13,20 @@
     <script src="{% static 'js/jquery.min.js' %}"></script>
     <script src="{% static 'js/map.js' %}"></script>
     <script>
+        function getCatastrophe(cat){
+            var catastrophes = jQuery.parseJSON("{{catastrophes}}".replace(/&quot;/g, "\""));
+            var edit;
+            console.log(cat.value);
+            for(var i = 0; i<catastrophes.length; i++){
+                if(catastrophes[i][0].pk == cat.value){
+                    edit = catastrophes[i][0];
+                }
+            }
+            console.log(edit);
+            //console.log(catastrophes[pk=cat.value]);
+        }
+    </script>
+    <script>
         $(function () {
             var mapId = "idmap";
             var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -156,6 +170,11 @@
       {% csrf_token %}
       <div class="row">
         {{ wizardform.zoom }}
+      </div>
+      <div class="row">
+          <div class="col-md-12">
+              {{edit_cat.catastrophe}}
+          </div>
       </div>
       <div class="row">
 					<div class="col-sm-12">

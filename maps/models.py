@@ -17,12 +17,12 @@ class Catastrophes(models.Model):
     def natural_key(self):
         return (self.name, self.latitud, self.longitud, self.fecha, self.description)
     def __str__(self):
-        return self.name+" "+str(self.latitud)+" "+str(self.longitud)
+        return self.name
     def get_catastrofes(self):
         catastrofes = []
         c = Catastrophes.objects.all()
         for i in range(len(c)):
-            catastrofes.append(Catastrophes.objects.filter(pk=i+1))
+            catastrofes.append(c[i])
         return catastrofes
 
 class StyleManager(models.Manager):
