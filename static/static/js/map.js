@@ -90,15 +90,16 @@ var greenIcon = L.icon({
 
 var iconos = [ yellowIcon, greenIcon, redIcon, orangeIcon, purpleIcon ];
 
-function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styles) {
+function MapHandler(marcadores, latitud, longitud, map, mapId, categories) {
 	this.marcadores = marcadores;
 	this.latitud = latitud;
 	this.longitud = longitud;
 	this.map = map;
 	this.mapId = mapId;
-	this.catastrophe = catastrophe;
 	this.markers = L.markerClusterGroup();
-	this.styles = styles;
+	this.categories = categories;
+	console.log(marcadores);
+	console.log(categories);
 	this.loadAll = function(placeHolder, marcadores) {
 		placeHolder.markers.clearLayers();
 		for (var i = 0; i < placeHolder.marcadores.length; i++) {
@@ -106,7 +107,7 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 				var markerAux = L.marker([
 						placeHolder.marcadores[i][j].fields.latitud,
 						placeHolder.marcadores[i][j].fields.longitud ], {
-					icon : iconos[parseInt(placeHolder.styles[i].fields.style.substring(3))]
+					icon : iconos[parseInt(placeHolder.categories[i].fields.style) -1]
 				});
 				markerAux
 						.bindPopup(placeHolder.marcadores[i][j].fields.description);
@@ -121,7 +122,7 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 			var markerAux = L.marker([
 					placeHolder.marcadores[category][j].fields.latitud,
 					placeHolder.marcadores[category][j].fields.longitud ], {
-				icon : iconos[parseInt(placeHolder.styles[category].fields.style.substring(3))]
+				icon : iconos[parseInt(placeHolder.categories[category].fields.style - 1)]
 			});
 			markerAux.bindPopup(marcadores[category][j].fields.description);
 			placeHolder.markers.addLayer(markerAux);
@@ -151,20 +152,13 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 		this.map.on('mousedown', function(e) {
 			estaPresionado = true;
 			eventoMostrarDialogo = e;
-			if ($("#actual-catastrophe")[0].value != mapId.substring(3)) {
-				$("#actual-catastrophe").val(mapId.substring(3));
-				delete_select_form();
-				update_select_form();
-			}
 			clearTimeout(this.downTimer);
 			this.downTimer = setTimeout(mostrarDialogo, 1000, e);
-
 		});
 
 		this.map.on('mouseup', function(e) {
 			estaPresionado = false;
 			clearTimeout(this.downTimer);
-
 		});
 
 		// mousemove event
@@ -176,21 +170,20 @@ function MapHandler(marcadores, latitud, longitud, map, mapId, catastrophe, styl
 			}
 		});
 
-		$("li.cat-all." + catastrophe).click(function() {
+		$("li.cat-all").click(function() {
 			placeHolder.loadAll(placeHolder, $(this).attr('categoria'));
 		});
 
-		$("li.filtro." + catastrophe).click(function() {
-			placeHolder.loadByCategory(placeHolder, $(this).attr('categoria'));
+		$("li.filtro").click(function() {
+			placeHolder.loadByCategory(placeHolder, $(this).attr('categoria') - 1);
 		});
 	}
 }
 
-function init_map(json_str, cat_str, styles_str) {
-	console.log(json_str);
-	var allData = jQuery.parseJSON(json_str);
-	var catData = jQuery.parseJSON(cat_str);
-	var styleData = jQuery.parseJSON(styles_str);
+function init_map(serializedMarks, serializedCategories, serializedCatastrophe) {
+	var parsedMarks = jQuery.parseJSON(serializedMarks);
+	var parsedCategories = jQuery.parseJSON(serializedCategories);
+	var parsedCatastrophe = jQuery.parseJSON(serializedCatastrophe);
 	// form
 	$("#dialog").css('box-shadow', '0px 0px 2px 3px #000').css('height',
 			$(".content-dialog").height()).css('z-index', 1001).hide();
@@ -207,18 +200,21 @@ function init_map(json_str, cat_str, styles_str) {
 
 	});
 
-	for (var i = 0; i < allData.length; i++) {
-		var mapId = "map" + (i + 1);
-		var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-			maxZoom : 18,
-		}), latlng = L.latLng(catData[i][0].fields.latitud, catData[i][0].fields.longitud);
-		var map = L.map(mapId, {
-			center : latlng,
-			zoom : 15,
-			layers : [ tiles ]
-		});
-		var mapHandler = new MapHandler(allData[i], catData[i][0].fields.latitud, catData[i][0].fields.longitud, map,
-				mapId, i, styleData[i])
-		mapHandler.loadMap();
-	}
+	//crear maphandler
+	var mapId = "map";
+	var tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		maxZoom : 18,
+	}), latlng = L.latLng(parsedCatastrophe.fields.latitud, parsedCatastrophe.fields.longitud);
+	var map = L.map(mapId, {
+		center : latlng,
+		zoom : 15,
+		layers : [ tiles ]
+	});
+	var mapHandler = new MapHandler(parsedMarks,
+									parsedCatastrophe.fields.latitud,
+									parsedCatastrophe.fields.longitud,
+									map,
+									mapId,
+									parsedCategories);
+	mapHandler.loadMap();
 }

@@ -24,6 +24,8 @@ class Catastrophes(models.Model):
         for i in range(len(c)):
             catastrofes.append(Catastrophes.objects.filter(pk=i+1))
         return catastrofes
+    def find_by_id(id_catastrophe):
+        return Catastrophes.objects.get(pk=id_catastrophe)
 
 class StyleManager(models.Manager):
     def get_by_natural_key(self, name):
@@ -43,13 +45,14 @@ class CategoryManager(models.Manager):
         catastrophe = Catastrophes.objects.get_by_natural_key(catastrophe_key)
         return self.get(category=category, style=style, catastrophe=catastrophe)
 
+
 class Category(models.Model):
     category = models.CharField(max_length=50)
     style = models.ForeignKey('Style')
     catastrophe = models.ForeignKey('Catastrophes')
 
     def __str__(self):
-        return self.style.name
+        return self.category
 
     def natural_key(self):
         return (self.category,) + self.style.natural_key() + self.catastrophe.natural_key()
