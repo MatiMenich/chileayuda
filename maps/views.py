@@ -60,6 +60,12 @@ def encodeArrayOfArray(arrayOfArray):
 		string += serializers.serialize('json', array) + ","
 	return string[:len(string) - 1] + "]"
 
+def encodeJson2(arrayOfArray):
+	string = '['
+	for array in arrayOfArray:
+		string += serializers.serialize('json', array, use_natural_keys=True) + ","
+	return string[:len(string) - 1] + "]"
+
 
 @register.filter
 def get_item(dictionary, key):
@@ -73,18 +79,33 @@ def wizard(request):
 	wizardform = WizardForm(request.POST or None, prefix="wizard")
 	catform = CategoryFormSet(request.POST or None, prefix="category")
 	if request.method == "POST":
-		if wizardform.is_valid():
+
+		if wizardform.is_valid() and catform.is_valid():
 			name = wizardform.cleaned_data['name']
+			date = wizardform.cleaned_data['date']
+			description = wizardform.cleaned_data['description']
 			latitud = wizardform.cleaned_data['latitud']
 			longitud = wizardform.cleaned_data['longitud']
 			zoom = wizardform.cleaned_data['zoom']
+			new_cat = Catastrophes(name=name,fecha=date,description=description,latitud=latitud, longitud=longitud)
+			new_cat.save()
+
 			for form in catform:
-				print('hola')	
-				if form.is_valid():
-					catName = form.cleaned_data['name']		
-					catStyle = form.cleaned_data['style']		
+				catName = form.cleaned_data['name']
+				categoryStyle = form.cleaned_data['style']
+				new_category = Category(category=catName, style=categoryStyle, catastrophe=new_cat)
+				new_category.save()
+			return render_to_response("panel.html", locals(), context_instance = RequestContext(request))
+		else:
+			return render_to_response("panel.html", locals(), context_instance = RequestContext(request))
 
 	return render_to_response("wizard.html", locals(), context_instance = RequestContext(request))
 
 def wizard2(request):
-	return render_to_response("wizard2.html", locals(), context_instance = RequestContext(request))
+	catastrophes = encodeJson2(Catastrophes.get_catastrofes(Catastrophes))
+	print(catastrophes)
+	edit_cat = EditCatastropheForm(request.POST or None, prefix="edit_cat")
+	wizardform = WizardForm(request.POST or None, prefix="wizard")
+	catform = CategoryFormSet(request.POST or None, prefix="category")
+
+	return render_to_response("edit_catastrophe.html", locals(), context_instance = RequestContext(request))

@@ -34,12 +34,12 @@
                 $("#zoom").val(e.target.getZoom());
                 $("#latitud").val(e.latlng.lat);
                 $("#longitud").val(e.latlng.lng);
-                
+
             });
         });
 
     </script>
-    <script> 
+    <script>
     function changeTest(a) {
        a.className ="form-control input-sm "+a.options[a.selectedIndex].className;
        return true;
@@ -147,89 +147,109 @@
 <div class="container">
     <h1>Crear nueva catástrofe</h1>
 
-    <div class="row">
-        <div id="idmap"
-             class="leaflet-container leaflet-fade-anim"
-             style="float: left; width: 50%; height: 400px; min-width: 200px; min-height: 200px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
-        </div>
-    </div>
-
-    
 
 
-		<form class="form-horizontal" method="post">{% csrf_token %}
 
-            <div class="row">
-                {{ wizardform.zoom }}
-                {{ wizardform.latitud }}
-                {{ wizardform.longitud }}
-            </div>
-            <div class="row">
+
+
+		<form class="form-horizontal" method="post">
+      {% csrf_token %}
+      <div class="row">
+        {{ wizardform.zoom }}
+      </div>
+      <div class="row">
 					<div class="col-sm-12">
-                    	<div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span>Hola</span>
-                            </div>
-                            <div class="panel-body">
-                                <div class="form-group">
-                                    <label class="col-md-4 control-label">Nombre</label>
-                                    <div class="col-md-4">
-                                        {{ wizardform.name }}
-                                    </div>
-                                </div>
-                            </div>
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span>Catástrofe</span>
+              </div>
+              <div class="panel-body">
+                <div class="row">
+                  <div class="col-md-8">
+
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="nombrecat">Nombre</label>
+                        <div class="col-sm-9">
+                          {{wizardform.name}}
                         </div>
-                    </div>
-            </div>
-            <br>
-
-            <div class="row">
-					<div class="col-sm-12">
-                    	<div class="panel panel-default">
-                            <div class="panel-heading">
-                                <span>Hola</span>
-                            </div>
-                            <div class="panel-body">
-                                {{ catform.management_form }}
-                                {% for form in catform %}
-                                    {{ form.id }}
-                                    <!-- Text input-->
-                                    <div class="col-md-12 row item">
-
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-2 control-label">Nombre</label>
-                                            <div class="col-md-3">
-                                                {{ form.name }}
-                                            </div>
-                                        </div>
-
-                                        <!-- Select Basic -->
-                                        <div class="form-group col-md-6">
-                                            <label class="col-md-6 control-label">Style</label>
-                                            <div class="col-md-6">
-                                                {{ form.style }}
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                {% endfor %}
-
-                                <div class="row">
-                                    <div class="col-sm-6"></div>
-                                    <div id="add_category" class="col-sm-6">
-                                        <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-plus"></span></button>
-                                        <label class="control-label">Agregar Categoría</label>
-                                    </div>
-                                </div>
-                            </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="datecat">Fecha</label>
+                        <div class="col-sm-9">
+                          {{wizardform.date}}
                         </div>
-                    </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="description">Descripción</label>
+                        <div class="col-sm-9">
+                          {{wizardform.description}}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="latitud">Latitud</label>
+                        <div class="col-sm-9">
+                          {{wizardform.latitud}}
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label col-sm-3" for="longitud">Longitud</label>
+                        <div class="col-sm-9">
+                          {{wizardform.longitud}}
+                        </div>
+                      </div>
+
+                  </div>
+                  <div id="idmap" class="leaflet-container leaflet-fade-anim col-md-4"
+                        style="float: left; width: 350px; height: 180px; border: 1px solid rgb(204, 204, 204); padding-left: 25%; position: relative;">
+                  </div>
                 </div>
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <br>
+
+      <div class="row">
+					<div class="col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <span>Categorías</span>
+              </div>
+              <div class="panel-body">
+                {{ catform.management_form }}
+                {% for form in catform %}
+                {{ form.id }}
+                <div class="col-md-12 row item">
+                  <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label text-right">Nombre</label>
+                    <div class="col-md-9">
+                      {{ form.name }}
+                    </div>
+                  </div>
+                  <div class="form-group col-md-6">
+                    <label class="col-md-3 control-label">Color</label>
+                    <div class="col-md-9">
+                      {{ form.style }}
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                <div class="row">
+                  <div id="add_category" class="col-md-offset-9 col-sm-3">
+                    <button class="btn btn-info" type="button"><span class="glyphicon glyphicon-plus"></span></button>
+                    <label class="control-label">Agregar Categoría</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 			<!-- Button -->
 			<div class="form-group">
 			  <label class="col-md-4 control-label" for="enviar"></label>
 			  <div class="col-md-4">
-				<button id="enviar" name="enviar" class="btn btn-info">Enviar</button>
+				<button id="enviar" type="submit" name="enviar" class="btn btn-info">Enviar</button>
 				<button id="cerrar" name="cerrar" type="button" class="btn btn-info" onclick="">cerrar</button>
 			  </div>
 			</div>
