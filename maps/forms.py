@@ -57,5 +57,11 @@ class CategoryForm(forms.Form):
     style = forms.ModelChoiceField(queryset=Style.objects.all(),empty_label='Seleccione un color', widget=MySelect(attrs={'class':'form-control input-sm','onchange':'changeTest(this)'}))
 CategoryFormSet = formset_factory(CategoryForm, extra=1)
 
+class CategoryForm2(forms.Form):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class':'form-control'}))
+    style = forms.ModelChoiceField(queryset=Style.objects.all(),empty_label='Seleccione un color', widget=MySelect(attrs={'class':'form-control input-sm','onchange':'changeTest(this)'}))
+    key = forms.CharField(widget=forms.TextInput(attrs={'type':'hidden'}))
+CategoryFormSet2 = formset_factory(CategoryForm2, extra=1)
+
 class EditCatastropheForm(forms.Form):
     catastrophe = forms.ModelChoiceField(queryset=Catastrophes.objects.all(), empty_label='Seleccione una catástrofe', widget=forms.Select(attrs={'class':'form-control input-sm','onchange':'getCatastrophe(this)'}))

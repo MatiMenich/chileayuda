@@ -72,7 +72,7 @@
                 var i = 0;
                 // Go through the forms and set their indices, names and IDs
                 for (formCount = forms.length; i < formCount; i++) {
-                    $(forms.get(i)).children().children().each(function () {
+                    $(forms.get(i)).children().children().children().each(function () {
                         updateElementIndex(this, prefix, i);
                     });
                 }
@@ -88,7 +88,7 @@
             console.log(formCount)
 
             // You can only submit a maximum of 20 forms
-            if (formCount < 3) {
+            if (formCount < 10) {
                 // Clone a form (without event handlers) from the first form
                 var row = $(".item:first").clone(true);
                 // Insert it after the last form
@@ -112,9 +112,9 @@
                 });
 
                 // Add an event handler for the delete item/form link
-                //$(row).find('.delete').click(function () {
-                //    return deleteForm(this, prefix);
-                //});
+                $(row).find('.delete').click(function () {
+                    return deleteForm(this, prefix);
+                });
                 //citySelector = $(row).find('.city')[0];
                 //citySelector.options.length = 0;
                 //citySelector.options[0] = new Option("Seleccione Ciudad", "");
@@ -229,8 +229,11 @@
                   </div>
                   <div class="form-group col-md-6">
                     <label class="col-md-3 control-label">Color</label>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                       {{ form.style }}
+                    </div>
+                    <div>
+                        <div align="right"><a class="delete" href="#">Borrar</a></div>
                     </div>
                   </div>
                 </div>

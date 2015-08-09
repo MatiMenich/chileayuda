@@ -15,7 +15,7 @@ class Catastrophes(models.Model):
     fecha = models.DateField()
 
     def natural_key(self):
-        return (self.name, self.latitud, self.longitud, self.fecha, self.description)
+        return (self.pk, self.name, self.latitud, self.longitud, self.fecha, self.description)
     def __str__(self):
         return self.name
     def get_catastrofes(self):
@@ -58,8 +58,21 @@ class Category(models.Model):
         return (self.category,) + self.style.natural_key() + self.catastrophe.natural_key()
     natural_key.dependencies = ['maps.Style','maps.Catastrophes']
 
+    def get_categories(self):
+        categories = []
+        c = Category.objects.all()
+        for i in range(len(c)):
+            categories.append(c[i])
+        return categories
+
     def get_by_catastrophe(id_catastrophe):
         return Category.objects.filter(catastrophe=id_catastrophe)
+    def get_pk_categories(self,id_catastrophe):
+        pks =[]
+        cats = self.get_by_catastrophe(id_catastrophe)
+        for c in cats:
+            pks.append(c.pk)
+        return pks
     def get_categories_by_cat(self):
         cats = []
         catastrophes = Catastrophes.objects.all()

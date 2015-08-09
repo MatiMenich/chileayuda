@@ -15,15 +15,54 @@
     <script>
         function getCatastrophe(cat){
             var catastrophes = jQuery.parseJSON("{{catastrophes}}".replace(/&quot;/g, "\""));
-            var edit;
-            console.log(cat.value);
+            var categories = jQuery.parseJSON("{{categories}}".replace(/&quot;/g, "\""));
+            var styles = jQuery.parseJSON("{{styles}}".replace(/&quot;/g, "\""));
+
+            var edit_cat;
+            var edit_category = [];
             for(var i = 0; i<catastrophes.length; i++){
                 if(catastrophes[i][0].pk == cat.value){
-                    edit = catastrophes[i][0];
+                    edit_cat = catastrophes[i][0];
                 }
             }
-            console.log(edit);
-            document.getElementById("nombrecat").value = edit.fields.name;
+
+            for(var i = 0; i<categories.length; i++){
+                if(categories[i][0].fields.catastrophe[0] == cat.value){
+                    edit_category.push(categories[i][0]);
+                }
+            }
+
+            var formCount = parseInt($('#id_' + "category" + '-TOTAL_FORMS').val());
+
+            for(var i = 1; i<formCount; i++){
+                $('.item')[1].remove();
+            }
+            $('#id_' + "category" + '-TOTAL_FORMS').val(1);
+
+
+            for(var i = 0; i<edit_category.length; i++){
+                document.getElementById("id_category-"+i+"-name").value = edit_category[i].fields.category;
+                document.getElementById("id_category-"+i+"-key").value = edit_category[i].pk;
+                for(var j = 0;j<styles.length;j++){
+                    if(styles[j][0].fields.name == edit_category[i].fields.style){
+
+                        $("#id_category-"+i+"-style").val(styles[j][0].pk).change();
+
+
+
+                    }
+                }
+                if(i<edit_category.length-1) {
+                    $("#add_category").click();
+                }
+            }
+
+
+            document.getElementById("nombrecat").value = edit_cat.fields.name;
+            document.getElementById("date_cat").value = edit_cat.fields.fecha;
+            document.getElementById("latitud").value = edit_cat.fields.latitud;
+            document.getElementById("longitud").value = edit_cat.fields.longitud;
+            document.getElementById("description_cat").value = edit_cat.fields.description;
             //console.log(catastrophes[pk=cat.value]);
         }
     </script>
@@ -69,7 +108,9 @@
         function updateElementIndex(el, prefix, ndx) {
             var id_regex = new RegExp('(' + prefix + '-\\d+-)');
             var replacement = prefix + '-' + ndx + '-';
-            if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+            if ($(el).attr("for")) {
+                $(el).attr("for", $(el).attr("for").replace(id_regex, replacement));
+            }
             if (el.id) el.id = el.id.replace(id_regex, replacement);
             if (el.name) el.name = el.name.replace(id_regex, replacement);
         }
@@ -79,6 +120,7 @@
 
             if (formCount > 1) {
                 // Delete the item/form
+                console.log($('.item')[0]);
                 $(btn).parents('.item').remove();
                 var forms = $('.item'); // Get all the forms
                 // Update the total number of forms (1 less than before)
@@ -87,7 +129,7 @@
                 var i = 0;
                 // Go through the forms and set their indices, names and IDs
                 for (formCount = forms.length; i < formCount; i++) {
-                    $(forms.get(i)).children().children().each(function () {
+                    $(forms.get(i)).children().children().children().each(function () {
                         updateElementIndex(this, prefix, i);
                     });
                 }
@@ -100,10 +142,10 @@
 
         function addForm(btn, prefix) {
             var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-            console.log(formCount)
+
 
             // You can only submit a maximum of 20 forms
-            if (formCount < 3) {
+            if (formCount < 10) {
                 // Clone a form (without event handlers) from the first form
                 var row = $(".item:first").clone(true);
                 // Insert it after the last form
@@ -153,6 +195,7 @@
         });
 
         $(".delete").click(function () {
+            console.log(this);
             return deleteForm(this, 'category');
         });});
     </script>
@@ -246,11 +289,17 @@
                     <div class="col-md-9">
                       {{ form.name }}
                     </div>
+                    <div>
+                      {{ form.key }}
+                    </div>
                   </div>
                   <div class="form-group col-md-6">
                     <label class="col-md-3 control-label">Color</label>
-                    <div class="col-md-9">
+                    <div class="col-md-6">
                       {{ form.style }}
+                    </div>
+                    <div>
+                        <div align="right"><a class="delete" href="#">Borrar</a></div>
                     </div>
                   </div>
                 </div>
